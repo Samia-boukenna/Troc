@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nouvelle Demande</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+<p class="well" th:text="${msgConf}"></p>
+<form method="post" action="/nouvelle_dmd" th:object="${fichier}">
+
+
+    <p> Adresse mail du emetteur : <input value="" th:field="*{IE.mail}" type="email" required> </p>
+    <p> nom de l emetteur : <input value="" th:field="*{IE.nom}" type="text" required> </p>
+    <p> Adresse mail du recepteur : <input value="" th:field="*{IR.mail}" type="email" required> </p>
+    <p> nom du recepteur : <input value="" th:field="*{IR.nom}" type="text" required> </p>
+    <p> Duree validite (en jour )  : <input value="" th:object="${message}" th:field="*{dureeValide}" type="number" required> </p>
+    <!--<p> Date Fin : <input value="" type="date"  th:object="${message}" th:field="*{dmd.dateFin}"> </p>-->
+    <p> Description du message : <input value="" th:object="${message}" type="text"  th:field="*{dmd.description}" required> </p>
+    <input value="Envoyer" type="submit" >
+
+</form>
+
+</body>
+</html>
