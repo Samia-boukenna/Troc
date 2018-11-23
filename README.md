@@ -1,0 +1,1 @@
+Application web de troc.
