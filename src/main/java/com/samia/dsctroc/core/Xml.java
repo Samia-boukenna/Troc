@@ -27,8 +27,11 @@ import java.io.File;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static java.util.Calendar.getInstance;
 
 @Service
 @Configurable
@@ -46,8 +49,13 @@ public class Xml {
 
     @Autowired
     private FichierRepo fichierRepo;
-
+    // creer le contenu xml
     public void xmlCreerDmd(Fichier fichier) {
+        Calendar c=getInstance();
+        c.setTime(fichier.getMessages().get(0).getDmd().getDateDebut());
+        c.add(Calendar.DATE,fichier.getMessages().get(0).getDureeValide());
+        Date dateFin=c.getTime();
+
         try {
             StringWriter stringWriter = new StringWriter();
             XMLOutputFactory xMLOutputFactory = XMLOutputFactory.newInstance();
@@ -92,20 +100,18 @@ public class Xml {
             xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getDmd().getDateDebut().toString());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("DateFin");
-//                                xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getDmd().getDateFin().toString());
+            xMLStreamWriter.writeCharacters(dateFin.toString());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndElement();
-            xMLStreamWriter.writeEndElement();
-            //end of fichier
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndDocument();
 
 
             xMLStreamWriter.flush();
             xMLStreamWriter.close();
-
+              // creer le fichier xml
             String xmlString = stringWriter.getBuffer().toString();
 
             ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/");
@@ -128,7 +134,7 @@ public class Xml {
             e.printStackTrace();
         }
     }
-
+       // lecture de la  demande ça lit la demande et enregistration dans la bdd ( lors de la reception)
     public void xmlLireDmd(String chemin) {
         try {
             File file = new File(chemin);
@@ -159,8 +165,8 @@ public class Xml {
                 fichierRepo.save(fic);
 
                 Dmd dmd = new Dmd();
-//                dmd.setDateDebut();
-//                dmd.setDateFin();
+                //dmd.setDateDebut();
+                //dmd.setDateFin();
                 dmd.setDescription(document.getElementsByTagName("DescDmd").item(0).getTextContent());
                 dmdRepo.save(dmd);
                 message.setDureeValide(Integer.parseInt(document.getElementsByTagName("DureeValideMsg").item(0).getTextContent()));

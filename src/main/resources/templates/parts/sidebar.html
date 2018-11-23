@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="sidebar">
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav slimscrollsidebar">
+        <div class="sidebar-head">
+            <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span></h3>
+        </div>
+        <ul class="nav" id="side-menu">
+            <li style="padding: 70px 0 0;">
+                <a href="/nouvelle_dmd" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Nouvelle demande</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+</body>
+</html>

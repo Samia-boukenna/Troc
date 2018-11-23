@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static java.util.Calendar.getInstance;
 
 
 @Controller
@@ -63,9 +66,13 @@ public class DmdController {
         fic.setIE(uE);
         fic.setIR(uR);
         fichierRepo.save(fic);
-
+        Calendar c=getInstance();
+        c.setTime(dateActuelle);
+        c.add(Calendar.DATE, message.getDureeValide());
+        Date dateFin=c.getTime();
         Dmd dmd = message.getDmd();
         dmd.setDateDebut(dateActuelle);
+        dmd.setDateFin(dateFin);
         dmdRepo.save(dmd);
 
         message.setDte(dateActuelle);
