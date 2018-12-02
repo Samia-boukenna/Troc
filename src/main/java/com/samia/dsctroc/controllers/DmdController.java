@@ -52,6 +52,7 @@ public class DmdController {
         return "nouvelle_dmd";
     }
 
+
     @PostMapping("/nouvelle_dmd")
     public String creerDmd(@ModelAttribute("fichier") Fichier f,@ModelAttribute("message") Message message, Model model) {
         Fichier fic = new Fichier();
