@@ -9,6 +9,8 @@ import com.samia.dsctroc.repositories.FichierRepo;
 import com.samia.dsctroc.repositories.MessageRepo;
 import com.samia.dsctroc.repositories.UtilisateurRepo;
 import com.samia.dsctroc.core.Xml;
+import java.io.File;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 import static java.util.Calendar.getInstance;
+import org.springframework.core.io.ClassPathResource;
 
 
 @Controller
@@ -44,9 +47,19 @@ public class DmdController {
     @Autowired
     private Xml xml;
     @RequestMapping(value = "/nouvelle_dmd", method = RequestMethod.GET)
-    public String afficherPageDmd(Model model, HttpServletRequest request) {
+    public String afficherPageDmd(Model model, HttpServletRequest request) throws IOException {
         Fichier fichier = new Fichier();
         Message message = new Message();
+        
+        ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/");
+        File rep = classPathResource.getFile();
+        File[] listFic = rep.listFiles();
+        for(int i = 0; i < listFic.length; i++ ){
+            
+                System.out.println("File " + listFic[i].getName());
+           
+        }
+        
         model.addAttribute("fichier", fichier);
         model.addAttribute("message", message);
         return "nouvelle_dmd";
