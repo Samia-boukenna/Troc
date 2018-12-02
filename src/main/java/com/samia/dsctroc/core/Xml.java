@@ -61,8 +61,10 @@ public class Xml {
             XMLOutputFactory xMLOutputFactory = XMLOutputFactory.newInstance();
             XMLStreamWriter xMLStreamWriter =
                     xMLOutputFactory.createXMLStreamWriter(stringWriter);
+            
 
             xMLStreamWriter.writeStartDocument();
+            xMLStreamWriter.writeProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"xsl/dmd.xsl\"");
             xMLStreamWriter.writeStartElement("Fichier");
             xMLStreamWriter.writeStartElement("Header");
             xMLStreamWriter.writeStartElement("FicID");
