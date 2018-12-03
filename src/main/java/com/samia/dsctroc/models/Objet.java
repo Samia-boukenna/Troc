@@ -12,9 +12,9 @@ public class Objet {
     @GeneratedValue
     private int id;
 
-    private String nom;
     private String type;
-    private String valeur;
+    @OneToOne
+    private Description description;
 
     @ManyToOne
     @JoinColumn(name = "prop")

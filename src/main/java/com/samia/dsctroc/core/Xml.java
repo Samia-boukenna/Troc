@@ -191,4 +191,116 @@ public class Xml {
             e.printStackTrace();
         }
     }
+    
+     public void xmlCreateProp(Fichier fichier) {
+     
+        try {
+            StringWriter stringWriter = new StringWriter();
+            XMLOutputFactory xMLOutputFactory = XMLOutputFactory.newInstance();
+            XMLStreamWriter xMLStreamWriter =
+                    xMLOutputFactory.createXMLStreamWriter(stringWriter);
+            
+
+            xMLStreamWriter.writeStartDocument();
+            xMLStreamWriter.writeProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"xsl/dmd.xsl\"");
+            xMLStreamWriter.writeStartElement("Fichier");
+            xMLStreamWriter.writeStartElement("Header");
+            xMLStreamWriter.writeStartElement("FicID");
+            xMLStreamWriter.writeCharacters(fichier.getFicId());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("nmIE");
+            xMLStreamWriter.writeCharacters(fichier.getIE().getNom());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("nmIR");
+            xMLStreamWriter.writeCharacters(fichier.getIR().getNom());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("MailDest");
+            xMLStreamWriter.writeCharacters(fichier.getIR().getMail());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("MailExp");
+            xMLStreamWriter.writeCharacters(fichier.getIE().getMail());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("Body");
+            xMLStreamWriter.writeStartElement("CollMess");
+            xMLStreamWriter.writeAttribute("NbOfTxs", "1");
+            xMLStreamWriter.writeStartElement("Message");
+            xMLStreamWriter.writeAttribute("MsgId", fichier.getMessages().get(0).getMsgId());
+            xMLStreamWriter.writeStartElement("Dte");
+            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getDte().toString());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("DureeValideMsg");
+            xMLStreamWriter.writeCharacters(Integer.toString(fichier.getMessages().get(0).getDureeValide()));
+            xMLStreamWriter.writeEndElement();
+            
+            xMLStreamWriter.writeStartElement("Prop");
+            xMLStreamWriter.writeStartElement("TitreP");
+            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getTitre());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("Offre");
+            xMLStreamWriter.writeStartElement("Objet");
+            xMLStreamWriter.writeStartElement("Type");
+            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getOffre().getObjets().get(0).getType());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("Description");
+            xMLStreamWriter.writeStartElement("Parametre");
+            xMLStreamWriter.writeStartElement("Nom");
+            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getOffre().getObjets().get(0).getDescription().getParametres().get(0).getNom());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("Valeur");
+            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getOffre().getObjets().get(0).getDescription().getParametres().get(0).getValeur());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();
+              xMLStreamWriter.writeStartElement("Demande");
+            xMLStreamWriter.writeStartElement("Objet");
+            xMLStreamWriter.writeStartElement("Type");
+            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getDemande().getObjets().get(0).getType());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("Description");
+            xMLStreamWriter.writeStartElement("Parametre");
+            xMLStreamWriter.writeStartElement("Nom");
+            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getDemande().getObjets().get(0).getDescription().getParametres().get(0).getNom());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("Valeur");
+            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getDemande().getObjets().get(0).getDescription().getParametres().get(0).getValeur());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();
+            
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndDocument();
+
+
+            xMLStreamWriter.flush();
+            xMLStreamWriter.close();
+              // creer le fichier xml
+            String xmlString = stringWriter.getBuffer().toString();
+
+            ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/");
+            String chemin = classPathResource.getFile().getPath() + "/prop" + fichier.getId() + ".xml";
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(new InputSource(new StringReader(xmlString)));
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            File file = new File(chemin);
+            if (file.createNewFile()) {
+                StreamResult result = new StreamResult(file);
+                transformer.transform(source, result);
+            }
+            stringWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

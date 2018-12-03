@@ -9,10 +9,90 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 <body>
-<form method="post" action="/nouvelle_prop" th:object="${fichier}">
-    <p> Adresse mail du emetteur : <input value="" th:field="*{IE.mail}" type="email" required> </p>
+ <form class="form-horizontal form-material" method="post" action="/nouvelle_prop" th:object="${fichier}">
+                                <div class="form-group">
+                                    <label for="nomIe" class="col-md-12">Nom de l'emetteur</label>
+                                    <div class="col-md-12">
+                                        <input type="text" id="nomIe" th:field="*{IE.nom}"  class="form-control form-control-line"> </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mailIe" class="col-md-12">Adresse mail du emetteur</label>
+                                    <div class="col-md-12">
+                                        <input type="email" th:field="*{IE.mail}"  class="form-control form-control-line" name="example-email" id="mailIe"> </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nomIR" class="col-md-12">Nom du recepteur</label>
+                                    <div class="col-md-12">
+                                        <input type="text"  th:field="*{IR.nom}"  id="nomIR" class="form-control form-control-line"> </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="emailIR" class="col-md-12">Adresse mail du recepteur </label>
+                                    <div class="col-md-12">
+                                        <input type="email" th:field="*{IR.mail}"   class="form-control form-control-line" name="example-email" id="emailIR"> </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="dureeval" class="col-md-12">Duree validite (en jour )</label>
+                                    <div class="col-md-12">
+                                        <input type="number" min="1" th:object="${message}" th:field="*{dureeValide}"  id="dureeval" class="form-control form-control-line"> </div>
+                                </div>
 
 
+                                <div class="form-group">
+                                    <label class="col-md-12" for="desc">Titre de la proposition</label>
+                                    <div class="col-md-12">
+                                        <textarea rows="5" th:object="${message}" th:field="*{prop.titre}" id="desc" class="form-control form-control-line"></textarea>
+                                    </div>
+                                     <div class="form-group">
+                                    <label class="col-md-12" for="desc">Type d'objet offre</label>
+                                    <div class="col-md-12">
+                                        <textarea rows="5" th:object="${message}" th:field="*{prop.offre.objets[0].type}" id="desc" class="form-control form-control-line"></textarea>
+                                    </div>
+                                    
+                                </div>
+                                             <div class="form-group">
+                                    <label class="col-md-12" for="desc">Nom du parametre offre</label>
+                                    <div class="col-md-12">
+                                        <textarea rows="5" th:object="${message}" th:field="*{prop.offre.objets[0].description.parametres[0].nom}" id="desc" class="form-control form-control-line"></textarea>
+                                    </div>
+                                    
+                                </div>
+                                            <div class="form-group">
+                                    <label class="col-md-12" for="desc">Valeur du parametre offre</label>
+                                    <div class="col-md-12">
+                                        <textarea rows="5" th:object="${message}" th:field="*{prop.offre.objets[0].description.parametres[0].valeur}" id="desc" class="form-control form-control-line"></textarea>
+                                    </div>
+                                    
+                                </div>
+                                    
+                                    <div class="form-group">
+                                    <label class="col-md-12" for="desc">Type d'objet offre</label>
+                                    <div class="col-md-12">
+                                        <textarea rows="5" th:object="${message}" th:field="*{prop.demande.objets[0].type}" id="desc" class="form-control form-control-line"></textarea>
+                                    </div>
+                                    
+                                </div>
+                                           
+                                             <div class="form-group">
+                                    <label class="col-md-12" for="desc">Nom du parametre demande</label>
+                                    <div class="col-md-12">
+                                        <textarea rows="5" th:object="${message}" th:field="*{prop.demande.objets[0].description.parametres[0].nom}" id="desc" class="form-control form-control-line"></textarea>
+                                    </div>
+                                    
+                                </div>
+                                            <div class="form-group">
+                                    <label class="col-md-12" for="desc">Valeur du parametre demande</label>
+                                    <div class="col-md-12">
+                                        <textarea rows="5" th:object="${message}" th:field="*{prop.demande.objets[0].description.parametres[0].valeur}" id="desc" class="form-control form-control-line"></textarea>
+                                    </div>
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-success">Envoyer la demande</button>
+                                    </div>
+                                </div>
+                            </form>
 
 
 </body>

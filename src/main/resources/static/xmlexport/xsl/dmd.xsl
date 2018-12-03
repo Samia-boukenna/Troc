@@ -12,6 +12,7 @@
 	<li>Mail de l'emmeteur : <xsl:value-of select="Fichier/Header/MailExp"/></li>
 	<li>Description de la demande : <xsl:value-of select="Fichier/Body/CollMess/Message/Dmd/DescDmd"/></li>
       </ul>
+      
     </body>
   </html>
   </xsl:template>

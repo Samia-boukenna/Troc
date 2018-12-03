@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
+import javax.persistence.OneToOne;
 
 @Data
 @Entity
@@ -21,7 +22,10 @@ public class Prop {
     // type soit offre soit demande
     private String type;
 
-    @OneToMany(mappedBy = "prop")
-    private List<Objet> objets;
+    @OneToOne
+    private Offre offre;
+    @OneToOne
+    private Demande demande;
+    
 
 }
