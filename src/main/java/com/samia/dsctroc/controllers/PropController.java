@@ -108,10 +108,6 @@ public class PropController {
         fic.setIE(uE);
         fic.setIR(uR);
         fichierRepo.save(fic);
-        Calendar c=getInstance();
-        c.setTime(dateActuelle);
-        c.add(Calendar.DATE, message.getDureeValide());
-        Date dateFin=c.getTime();
         Prop prop = message.getProp();
         paramRepo.saveAll(prop.getOffre().getObjets().get(0).getDescription().getParametres());
         paramRepo.saveAll(prop.getDemande().getObjets().get(0).getDescription().getParametres());
