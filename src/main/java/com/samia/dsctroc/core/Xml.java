@@ -49,19 +49,20 @@ public class Xml {
 
     @Autowired
     private FichierRepo fichierRepo;
+
     // creer le contenu xml
     public void xmlCreerDmd(Fichier fichier) {
-        Calendar c=getInstance();
+        Calendar c = getInstance();
         c.setTime(fichier.getMessages().get(0).getDmd().getDateDebut());
-        c.add(Calendar.DATE,fichier.getMessages().get(0).getDureeValide());
-        Date dateFin=c.getTime();
+        c.add(Calendar.DATE, fichier.getMessages().get(0).getDureeValide());
+        Date dateFin = c.getTime();
 
         try {
             StringWriter stringWriter = new StringWriter();
             XMLOutputFactory xMLOutputFactory = XMLOutputFactory.newInstance();
             XMLStreamWriter xMLStreamWriter =
                     xMLOutputFactory.createXMLStreamWriter(stringWriter);
-            
+
 
             xMLStreamWriter.writeStartDocument();
             xMLStreamWriter.writeProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"xsl/dmd.xsl\"");
@@ -113,7 +114,7 @@ public class Xml {
 
             xMLStreamWriter.flush();
             xMLStreamWriter.close();
-              // creer le fichier xml
+            // creer le fichier xml
             String xmlString = stringWriter.getBuffer().toString();
 
             ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/");
@@ -136,7 +137,8 @@ public class Xml {
             e.printStackTrace();
         }
     }
-       // lecture de la  demande ça lit la demande et enregistration dans la bdd ( lors de la reception)
+
+    // lecture de la  demande ça lit la demande et enregistration dans la bdd ( lors de la reception)
     public void xmlLireDmd(String chemin) {
         try {
             File file = new File(chemin);
@@ -151,15 +153,17 @@ public class Xml {
                 List<Fichier> fichiers = new ArrayList<>();
                 Utilisateur uE = utilisateurRepo.findByMail(document.getElementsByTagName("MailExp").item(0).getTextContent());
                 Utilisateur uR = utilisateurRepo.findByMail(document.getElementsByTagName("MailDest").item(0).getTextContent());
-                if(uE == null){
+                if (uE == null) {
                     uE = new Utilisateur();
                     uE.setNom(document.getElementsByTagName("nmIE").item(0).getTextContent());
+                    uE.setMail(document.getElementsByTagName("MailExp").item(0).getTextContent());
                     utilisateurRepo.save(uE);
 
                 }
-                if (uR== null) {
+                if (uR == null) {
                     uR = new Utilisateur();
                     uR.setNom(document.getElementsByTagName("nmIR").item(0).getTextContent());
+                    uR.setMail(document.getElementsByTagName("MailDest").item(0).getTextContent());
                     utilisateurRepo.save(uR);
                 }
                 fic.setIE(uE);
@@ -167,12 +171,13 @@ public class Xml {
                 fichierRepo.save(fic);
 
                 Dmd dmd = new Dmd();
-                //dmd.setDateDebut();
-                //dmd.setDateFin();
+                dmd.setDateDebut(dateActuelle);
+                dmd.setDateFin(dateActuelle);
                 dmd.setDescription(document.getElementsByTagName("DescDmd").item(0).getTextContent());
                 dmdRepo.save(dmd);
+                message.setDmd(dmd);
                 message.setDureeValide(Integer.parseInt(document.getElementsByTagName("DureeValideMsg").item(0).getTextContent()));
-//                message.setDte(dateActuelle);
+                message.setDte(dateActuelle);
                 message.setFichier(fic);
 
                 messageRepo.save(message);
@@ -191,15 +196,15 @@ public class Xml {
             e.printStackTrace();
         }
     }
-    
-     public void xmlCreateProp(Fichier fichier) {
-     
+
+    public void xmlCreateProp(Fichier fichier) {
+
         try {
             StringWriter stringWriter = new StringWriter();
             XMLOutputFactory xMLOutputFactory = XMLOutputFactory.newInstance();
             XMLStreamWriter xMLStreamWriter =
                     xMLOutputFactory.createXMLStreamWriter(stringWriter);
-            
+
 
             xMLStreamWriter.writeStartDocument();
             xMLStreamWriter.writeProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"xsl/dmd.xsl\"");
@@ -232,7 +237,7 @@ public class Xml {
             xMLStreamWriter.writeStartElement("DureeValideMsg");
             xMLStreamWriter.writeCharacters(Integer.toString(fichier.getMessages().get(0).getDureeValide()));
             xMLStreamWriter.writeEndElement();
-            
+
             xMLStreamWriter.writeStartElement("Prop");
             xMLStreamWriter.writeStartElement("TitreP");
             xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getTitre());
@@ -254,7 +259,7 @@ public class Xml {
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndElement();
-              xMLStreamWriter.writeStartElement("Demande");
+            xMLStreamWriter.writeStartElement("Demande");
             xMLStreamWriter.writeStartElement("Objet");
             xMLStreamWriter.writeStartElement("Type");
             xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getDemande().getObjets().get(0).getType());
@@ -273,14 +278,14 @@ public class Xml {
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndElement();
-            
+
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndDocument();
 
 
             xMLStreamWriter.flush();
             xMLStreamWriter.close();
-              // creer le fichier xml
+            // creer le fichier xml
             String xmlString = stringWriter.getBuffer().toString();
 
             ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/");
