@@ -19,17 +19,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author gentile
  */
 @Controller
-public class MesDmdController {
-    @RequestMapping(value = "/mes_dmd", method = RequestMethod.GET)
+public class MesPropController {
+    @RequestMapping(value = "/mes_prop", method = RequestMethod.GET)
     public String afficherPageDmd(Model model, HttpServletRequest request) throws IOException {
         
-        ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/dmd/");
+        ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/prop/");
         File repert = classPathResource.getFile();
         File[] listFic = repert.listFiles();
         
         model.addAttribute("listFic", listFic);
         
-        return "mes_dmd";
+        return "mes_prop";
     }   
-        
 }

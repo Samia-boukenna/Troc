@@ -65,7 +65,7 @@ public class Xml {
 
 
             xMLStreamWriter.writeStartDocument();
-            xMLStreamWriter.writeProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"xsl/dmd.xsl\"");
+            xMLStreamWriter.writeProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"xsl/prop.xsl\"");
             xMLStreamWriter.writeStartElement("Fichier");
             xMLStreamWriter.writeStartElement("Header");
             xMLStreamWriter.writeStartElement("FicID");
@@ -207,7 +207,7 @@ public class Xml {
 
 
             xMLStreamWriter.writeStartDocument();
-            xMLStreamWriter.writeProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"xsl/dmd.xsl\"");
+            xMLStreamWriter.writeProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"xsl/prop.xsl\"");
             xMLStreamWriter.writeStartElement("Fichier");
             xMLStreamWriter.writeStartElement("Header");
             xMLStreamWriter.writeStartElement("FicID");
@@ -288,7 +288,7 @@ public class Xml {
             // creer le fichier xml
             String xmlString = stringWriter.getBuffer().toString();
 
-            ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/");
+            ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/prop/");
             String chemin = classPathResource.getFile().getPath() + "/prop" + fichier.getId() + ".xml";
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

@@ -15,16 +15,16 @@
                 <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png"/>
                 <title>Ample Admin Template - The Ultimate Multipurpose admin template</title>
 
-                <link href="../css/bootstrap.min.css" rel="stylesheet"/>
+                <link href="../../css/bootstrap.min.css" rel="stylesheet"/>
 
-                <link href="../css/sidebar-nav.min.css" rel="stylesheet"/>
+                <link href="../../css/sidebar-nav.min.css" rel="stylesheet"/>
 
-                <link href="../css/animate.css" rel="stylesheet"/>
+                <link href="../../css/animate.css" rel="stylesheet"/>
 
-                <link href="../css/style.css" rel="stylesheet"/>
+                <link href="../../css/style.css" rel="stylesheet"/>
 
-                <link href="../css/colors/default.css" id="theme" rel="stylesheet"/>
-                <link href="../css/troc.css"  rel="stylesheet"/>
+                <link href="../../css/colors/default.css" id="theme" rel="stylesheet"/>
+                <link href="../../css/troc.css"  rel="stylesheet"/>
 
                 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
                 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -52,7 +52,7 @@
                             <div class="top-left-part">
                                 <!-- Logo -->
                                 <a class="logo" href="/">
-                                    <img src="../images/xml-troc.png" width="200" alt="home" class="light-logo img-responsive" style="display: inline-block" />
+                                    <img src="../../images/xml-troc.png" width="200" alt="home" class="light-logo img-responsive" style="display: inline-block" />
                                 </a>
                             </div>
                             <!-- /Logo -->
@@ -74,6 +74,8 @@
                                 <li style="padding: 70px 0 0;">
                                     <a href="/nouvelle_dmd" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Nouvelle demande</a>
                                     <a href="/nouvelle_prop" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Nouvelle proposition</a>
+                                    <a href="/mes_dmd" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes demandes</a>
+                                    <a href="/mes_prop" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes propositions</a>
                                 </li>
                             </ul>
                         </div>
@@ -135,18 +137,18 @@
                         </div>
                         <footer class="footer text-center"> 2017 @Copyright Troc </footer>
                         <!-- jQuery -->
-                        <script src="../js/jquery.min.js"></script>
+                        <script src="../../js/jquery.min.js"></script>
                         <!-- Bootstrap Core JavaScript -->
-                        <script src="../js/bootstrap.min.js"></script>
+                        <script src="../../js/bootstrap.min.js"></script>
                         <!-- Menu Plugin JavaScript -->
-                        <script src="../js/sidebar-nav.min.js"></script>
+                        <script src="../../js/sidebar-nav.min.js"></script>
                         <!--slimscroll JavaScript -->
-                        <script src="../js/jquery.slimscroll.js"></script>
+                        <script src="../../js/jquery.slimscroll.js"></script>
                         <!--Wave Effects -->
-                        <script src="../js/waves.js"></script>
+                        <script src="../../js/waves.js"></script>
                         <!-- Custom Theme JavaScript -->
-                        <script src="../js/custom.min.js"></script>
-                        <script src="../js/troc.js"></script>
+                        <script src="../../js/custom.min.js"></script>
+                        <script src="../../js/troc.js"></script>
                     </div>
                 </div>
 
