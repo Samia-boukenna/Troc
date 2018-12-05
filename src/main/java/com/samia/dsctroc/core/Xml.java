@@ -251,7 +251,7 @@ public class Xml {
             xMLStreamWriter.writeCharacters(objetsOffre[j].getType());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("Description");
-            for (int k=0;k<objetsOffre[j].getDescription().getParametres().size();k++){
+            for (int k=1;k<objetsOffre[j].getDescription().getParametres().size();k++){
             xMLStreamWriter.writeStartElement("Parametre");
             xMLStreamWriter.writeStartElement("Nom");
             xMLStreamWriter.writeCharacters(objetsOffre[j].getDescription().getParametres().get(k).getNom());
@@ -266,14 +266,14 @@ public class Xml {
             }
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("Demande");
-             Objet[] objetsDemande=fichier.getMessages().get(0).getProp().getDemande().getObjets().toArray(new Objet[fichier.getMessages().get(0).getProp().getOffre().getObjets().size()]);
-           for (int j=0;j<fichier.getMessages().get(0).getProp().getOffre().getObjets().size();j++){
+             Objet[] objetsDemande=fichier.getMessages().get(0).getProp().getDemande().getObjets().toArray(new Objet[fichier.getMessages().get(0).getProp().getDemande().getObjets().size()]);
+           for (int j=0;j<fichier.getMessages().get(0).getProp().getDemande().getObjets().size();j++){
             xMLStreamWriter.writeStartElement("Objet");
             xMLStreamWriter.writeStartElement("Type");
             xMLStreamWriter.writeCharacters(objetsDemande[j].getType());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("Description");
-            for (int k=0;k<objetsDemande[j].getDescription().getParametres().size();k++){
+            for (int k=1;k<objetsDemande[j].getDescription().getParametres().size();k++){
             xMLStreamWriter.writeStartElement("Parametre");
             xMLStreamWriter.writeStartElement("Nom");
             xMLStreamWriter.writeCharacters(objetsDemande[j].getDescription().getParametres().get(k).getNom());
