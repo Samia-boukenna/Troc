@@ -87,6 +87,7 @@
                                             <th>Recepteur</th>
                                             <th>Date debut</th>
                                             <th>Date fin</th>
+                                            <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                         </thead>
@@ -96,9 +97,11 @@
                                             <td th:text="${fic.getIR().nom}"></td>
                                             <td th:text="${fic.messages.get(0).dmd.dateDebut}"></td>
                                             <td th:text="${fic.messages.get(0).dmd.dateFin}"></td>
+                                            <td th:text="${(fic.messages.get(0).auth == null) ? 'Pas encore traitée': (fic.messages.get(0).auth.accepte ? 'acceptée':'refusée')}"></td>
                                             <td>
-                                                <button class="btn btn-success">Accepter</button>
-                                                <button class="btn btn-danger">Refuser</button>
+                                                <input th:if="${(fic.messages.get(0).auth == null)}" type="hidden" class="msg" th:value="${fic.messages.get(0).id}">
+                                                <button th:if="${(fic.messages.get(0).auth == null)}" id="accepter-dmd" class="btn btn-success">Accepter</button>
+                                                <button th:if="${(fic.messages.get(0).auth == null)}" id="refuser-dmd" class="btn btn-danger">Refuser</button>
                                             </td>
                                         </tr>
                                         </tbody>

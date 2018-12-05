@@ -1,20 +1,11 @@
 jQuery(function ($) {
 
     $('#accepter-dmd').on('click', function (e) {
+        console.log('hello')
         e.preventDefault();
-        var ficId = $('#msg-id').html();
-        var nmIE=$("#nm-ie").html();
-        var nmIR =$("#nm-ir").html();
-        var mailDest=$("#mail-dest").html();
-        var mailExp=$("#mail-exp").html();
-        var msgId =$("#msg-id").html();
+        var msgId = $(this).parent().find('.msg').val();
         var data = {
-            msgID: ficId,
             type: 'accepter',
-            nmIE: nmIE,
-            nmIR: nmIR,
-            mailDest: mailDest,
-            mailExp: mailExp,
             msgId: msgId
         };
         $.ajax({
@@ -28,8 +19,10 @@ jQuery(function ($) {
             data: JSON.stringify(data),
             cache: false,
             success: function (data) {
-                alert('data sent');
-                alert(data);
+                if(data.length && data[0] === 'accep') {
+                    alert('demande traitée');
+                    location.reload();
+                }
             },
             error: function (data) {
 
@@ -39,20 +32,9 @@ jQuery(function ($) {
 
     $('#refuser-dmd').on('click', function (e) {
         e.preventDefault();
-        var msgId = $('#msg-id').html();
-        var ficId = $('#msg-id').html();
-        var nmIE=$("#nm-ie").html();
-        var nmIR =$("#nm-ir").html();
-        var mailDest=$("#mail-dest").html();
-        var mailExp=$("#mail-exp").html();
-        var msgId =$("#msg-id").html();
+        var msgId = $(this).parent().find('.msg').val();
         var data = {
-            msgID: ficId,
             type: 'refuser',
-            nmIE: nmIE,
-            nmIR: nmIR,
-            mailDest: mailDest,
-            mailExp: mailExp,
             msgId: msgId
         };
         $.ajax({
@@ -66,8 +48,10 @@ jQuery(function ($) {
             data: JSON.stringify(data),
             cache: false,
             success: function (data) {
-                alert('data sent');
-                alert(data);
+                if(data.length && data[0] === 'ref') {
+                    alert('demande traitée');
+                    location.reload();
+                }
             },
             error: function (data) {
 
