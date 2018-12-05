@@ -62,7 +62,7 @@ public class Xml {
 
 
             xMLStreamWriter.writeStartDocument();
-            xMLStreamWriter.writeProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"xsl/prop.xsl\"");
+            xMLStreamWriter.writeProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"xsl/dmd.xsl\"");
             xMLStreamWriter.writeStartElement("Fichier");
             xMLStreamWriter.writeStartElement("Header");
             xMLStreamWriter.writeStartElement("FicID");

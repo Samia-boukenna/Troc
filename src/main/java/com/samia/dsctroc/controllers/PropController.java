@@ -80,7 +80,7 @@ public class PropController {
         Fichier fichier = new Fichier();
         Message message = new Message();
        
-        model.addAttribute("propositions", propRepo.findAll());
+        model.addAttribute("propositions", propRepo.findAllByMineTrue());
         model.addAttribute("fichier", fichier);
         model.addAttribute("message", message);
         return "nouvelle_prop";

@@ -17,6 +17,7 @@ public class Prop {
     @GeneratedValue
     private int id;
 
+    private boolean mine;
     private String titre;
 
     @OneToOne

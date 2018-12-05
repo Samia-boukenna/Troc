@@ -35,7 +35,7 @@ public class ObjetController {
   
     @RequestMapping(value = "/mes_objets", method = RequestMethod.GET)
     public String afficherObjets(Model model, HttpServletRequest request) throws IOException {
-      List<Objet> objets=(List<Objet>) objetRepo.findAll();
+      List<Objet> objets=(List<Objet>) objetRepo.findAllByMineTrue();
         model.addAttribute("objets", objets);
         
         model.addAttribute("newObjet", new Objet());
@@ -43,6 +43,7 @@ public class ObjetController {
     }
     @RequestMapping("/ajouter_objet")
     public String ajoutObjet(Model model,Objet  newObjet) {
+        newObjet.setMine(true);
         paramRepo.saveAll(newObjet.getDescription().getParametres());
         descRepo.save(newObjet.getDescription());
      objetRepo.save(newObjet);

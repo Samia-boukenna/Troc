@@ -44,10 +44,10 @@ public class PropositionController {
  
     @RequestMapping(value = "/mes_propositions", method = RequestMethod.GET)
     public String afficherPropositions(Model model, HttpServletRequest request) throws IOException {
-      List<Prop> propositions=(List<Prop>) propRepo.findAll();
+      List<Prop> propositions=(List<Prop>) propRepo.findAllByMineTrue();
         model.addAttribute("propositions", propositions);
         
-        model.addAttribute("objets", objetRepo.findAll());
+        model.addAttribute("objets", objetRepo.findAllByMineTrue());
         model.addAttribute("newProp", new Prop());
         return "mes_propositions";
     }
@@ -65,6 +65,7 @@ public class PropositionController {
          demandeRepo.save(demande);
         newProp.setDemande(demande);
         newProp.setOffre(offre);
+        newProp.setMine(true);
      propRepo.save(newProp);
         return "redirect:/mes_propositions";
     }

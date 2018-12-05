@@ -12,6 +12,7 @@ public class Objet {
     @GeneratedValue
     private int id;
 
+    private boolean mine;
     private String type;
     @OneToOne
     private Description description;
