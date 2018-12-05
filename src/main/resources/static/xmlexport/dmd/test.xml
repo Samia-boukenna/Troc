@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="xsl/dmd.xsl"?>
+<Fichier>
+    <Header>
+        <FicID>f976c04d-3d1e-43d4-a6b2-a102136b3ab4</FicID>
+        <NmIE>samia</NmIE>
+        <NmIR>test</NmIR>
+        <MailDest>test@hotmail.fr</MailDest>
+        <MailExp>samia@hotmail.fr</MailExp>
+    </Header>
+    <Body>
+        <CollMess NbOfTxs="1">
+            <Message MsgId="b3be8426-858f-49bf-904c-d0e9ebdd79a6">
+                <Dte>Thu Nov 22 14:37:04 CET 2018</Dte>
+                <DureeValideMsg>1</DureeValideMsg>
+                <Dmd>
+                    <DescDmd>accept</DescDmd>
+                    <DateDebut>Thu Nov 22 14:37:04 CET 2018</DateDebut>
+                    <DateFin/>
+                </Dmd>
+            </Message>
+        </CollMess>
+    </Body>
+</Fichier>

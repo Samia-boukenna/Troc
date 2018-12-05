@@ -36,7 +36,7 @@ public class Message {
     private Fichier fichier;
 
     public Message(){
-        msgId = UUID.randomUUID().toString();
+        msgId = "_"+UUID.randomUUID().toString();
     }
 
 }

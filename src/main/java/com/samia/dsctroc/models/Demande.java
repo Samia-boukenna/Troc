@@ -1,6 +1,7 @@
 package com.samia.dsctroc.models;
 
 import java.util.List;
+import java.util.Set;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,6 +13,6 @@ public class Demande {
     @Id
     @GeneratedValue
     private int id;
-    @OneToMany
-    private List<Objet> objets;
+    @ManyToMany
+    private Set<Objet> objets;
 }

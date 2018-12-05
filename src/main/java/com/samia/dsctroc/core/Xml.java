@@ -68,10 +68,10 @@ public class Xml {
             xMLStreamWriter.writeStartElement("FicID");
             xMLStreamWriter.writeCharacters(fichier.getFicId());
             xMLStreamWriter.writeEndElement();
-            xMLStreamWriter.writeStartElement("nmIE");
+            xMLStreamWriter.writeStartElement("NmIE");
             xMLStreamWriter.writeCharacters(fichier.getIE().getNom());
             xMLStreamWriter.writeEndElement();
-            xMLStreamWriter.writeStartElement("nmIR");
+            xMLStreamWriter.writeStartElement("NmIR");
             xMLStreamWriter.writeCharacters(fichier.getIR().getNom());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("MailDest");
@@ -114,7 +114,7 @@ public class Xml {
             // creer le fichier xml
             String xmlString = stringWriter.getBuffer().toString();
 
-            ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/");
+            ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/dmd/");
             String chemin = classPathResource.getFile().getPath() + "/dmd" + fichier.getId() + ".xml";
 
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -153,14 +153,14 @@ public class Xml {
                 fic.setFicId(document.getElementsByTagName("FicID").item(0).getTextContent());
                 if (uE == null) {
                     uE = new Utilisateur();
-                    uE.setNom(document.getElementsByTagName("nmIE").item(0).getTextContent());
+                    uE.setNom(document.getElementsByTagName("NmIE").item(0).getTextContent());
                     uE.setMail(document.getElementsByTagName("MailExp").item(0).getTextContent());
                     utilisateurRepo.save(uE);
 
                 }
                 if (uR == null) {
                     uR = new Utilisateur();
-                    uR.setNom(document.getElementsByTagName("nmIR").item(0).getTextContent());
+                    uR.setNom(document.getElementsByTagName("NmIR").item(0).getTextContent());
                     uR.setMail(document.getElementsByTagName("MailDest").item(0).getTextContent());
                     utilisateurRepo.save(uR);
                 }
@@ -211,10 +211,10 @@ public class Xml {
             xMLStreamWriter.writeStartElement("FicID");
             xMLStreamWriter.writeCharacters(fichier.getFicId());
             xMLStreamWriter.writeEndElement();
-            xMLStreamWriter.writeStartElement("nmIE");
+            xMLStreamWriter.writeStartElement("NmIE");
             xMLStreamWriter.writeCharacters(fichier.getIE().getNom());
             xMLStreamWriter.writeEndElement();
-            xMLStreamWriter.writeStartElement("nmIR");
+            xMLStreamWriter.writeStartElement("NmIR");
             xMLStreamWriter.writeCharacters(fichier.getIR().getNom());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("MailDest");
@@ -241,38 +241,48 @@ public class Xml {
             xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getTitre());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("Offre");
+            Objet[] objetsOffre=fichier.getMessages().get(0).getProp().getOffre().getObjets().toArray(new Objet[fichier.getMessages().get(0).getProp().getOffre().getObjets().size()]);
+            for (int j=0;j<fichier.getMessages().get(0).getProp().getOffre().getObjets().size();j++){
             xMLStreamWriter.writeStartElement("Objet");
             xMLStreamWriter.writeStartElement("Type");
-            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getOffre().getObjets().get(0).getType());
+            xMLStreamWriter.writeCharacters(objetsOffre[j].getType());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("Description");
+            for (int k=0;k<objetsOffre[j].getDescription().getParametres().size();k++){
             xMLStreamWriter.writeStartElement("Parametre");
             xMLStreamWriter.writeStartElement("Nom");
-            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getOffre().getObjets().get(0).getDescription().getParametres().get(0).getNom());
+            xMLStreamWriter.writeCharacters(objetsOffre[j].getDescription().getParametres().get(k).getNom());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("Valeur");
-            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getOffre().getObjets().get(0).getDescription().getParametres().get(0).getValeur());
+            xMLStreamWriter.writeCharacters(objetsOffre[j].getDescription().getParametres().get(k).getValeur());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndElement();
+            }
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndElement();
+            }
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("Demande");
+             Objet[] objetsDemande=fichier.getMessages().get(0).getProp().getDemande().getObjets().toArray(new Objet[fichier.getMessages().get(0).getProp().getOffre().getObjets().size()]);
+           for (int j=0;j<fichier.getMessages().get(0).getProp().getOffre().getObjets().size();j++){
             xMLStreamWriter.writeStartElement("Objet");
             xMLStreamWriter.writeStartElement("Type");
-            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getDemande().getObjets().get(0).getType());
+            xMLStreamWriter.writeCharacters(objetsDemande[j].getType());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("Description");
+            for (int k=0;k<objetsDemande[j].getDescription().getParametres().size();k++){
             xMLStreamWriter.writeStartElement("Parametre");
             xMLStreamWriter.writeStartElement("Nom");
-            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getDemande().getObjets().get(0).getDescription().getParametres().get(0).getNom());
+            xMLStreamWriter.writeCharacters(objetsDemande[j].getDescription().getParametres().get(k).getNom());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("Valeur");
-            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getProp().getDemande().getObjets().get(0).getDescription().getParametres().get(0).getValeur());
+            xMLStreamWriter.writeCharacters(objetsDemande[j].getDescription().getParametres().get(k).getValeur());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndElement();
+            }
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndElement();
+            }
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeEndElement();
