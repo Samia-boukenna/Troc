@@ -78,13 +78,19 @@
                             <ul class="nav" id="side-menu">
                                 <li style="padding: 70px 0 0;">
                                     <a href="/nouvelle_dmd" class="waves-effect">
-                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Nouvelle demande</a>
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Envoyer une nouvelle demande</a>
                                     <a href="/nouvelle_prop" class="waves-effect">
-                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Nouvelle proposition</a>
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Envoyer une nouvelle proposition</a>
                                     <a href="/mes_dmd" class="waves-effect">
-                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes demandes</a>
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes demandes envoyées</a>
+                                    <a href="/dmd-recues" class="waves-effect">
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes demandes recues</a>
                                     <a href="/mes_prop" class="waves-effect">
-                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes propositions</a>
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes propositions envoyées</a>
+                                    <a href="/mes_objets" class="waves-effect">
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Gerer mes objets</a>
+                                    <a href="/mes_propositions" class="waves-effect">
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Gerer mes propositions</a>
                                 </li>
                             </ul>
                         </div>
@@ -181,7 +187,7 @@
                                                     <li>
                                                        
                                                         <p class="form-control-static">
-                                                             <b>Type d'objet demandé </b>
+                                                            <b>Type d'objet demandé </b>
                                                             <xsl:value-of select="Type"/>
                                                         </p>
                                                         <ul>
@@ -221,8 +227,7 @@
                                             <p class="sr-only" id="msg-id">
                                                 <xsl:value-of select="Fichier/Body/CollMess/Message/@MsgId"/>
                                             </p>
-                                            <button class="btn btn-success" id="accepter-dmd">Accepter</button>
-                                            <button class="btn btn-danger" id="refuser-dmd">Refuser</button>
+                                           
                                         </form>
                                     </div>
                                 </div>
