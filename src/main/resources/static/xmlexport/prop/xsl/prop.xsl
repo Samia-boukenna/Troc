@@ -68,14 +68,29 @@
                     <div class="navbar-default sidebar" role="navigation">
                         <div class="sidebar-nav slimscrollsidebar">
                             <div class="sidebar-head">
-                                <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span></h3>
+                                <h3>
+                                    <span class="fa-fw open-close">
+                                        <i class="ti-close ti-menu"></i>
+                                    </span> 
+                                    <span class="hide-menu">Navigation</span>
+                                </h3>
                             </div>
                             <ul class="nav" id="side-menu">
                                 <li style="padding: 70px 0 0;">
-                                    <a href="/nouvelle_dmd" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Nouvelle demande</a>
-                                    <a href="/nouvelle_prop" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Nouvelle proposition</a>
-                                    <a href="/mes_dmd" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes demandes</a>
-                                    <a href="/mes_prop" class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes propositions</a>
+                                    <a href="/nouvelle_dmd" class="waves-effect">
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Envoyer une nouvelle demande</a>
+                                    <a href="/nouvelle_prop" class="waves-effect">
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Envoyer une nouvelle proposition</a>
+                                    <a href="/mes_dmd" class="waves-effect">
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes demandes envoyées</a>
+                                    <a href="/dmd-recues" class="waves-effect">
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes demandes recues</a>
+                                    <a href="/mes_prop" class="waves-effect">
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes propositions envoyées</a>
+                                    <a href="/mes_objets" class="waves-effect">
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Gerer mes objets</a>
+                                    <a href="/mes_propositions" class="waves-effect">
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Gerer mes propositions</a>
                                 </li>
                             </ul>
                         </div>
@@ -90,10 +105,13 @@
                         <div class="container-fluid">
                             <div class="row bg-title">
                                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                                    <h4 class="page-title">Details demande</h4> </div>
+                                    <h4 class="page-title">Details demande</h4> 
+                                </div>
                                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                                     <ol class="breadcrumb">
-                                        <li><a href="/">Troc</a></li>
+                                        <li>
+                                            <a href="/">Troc</a>
+                                        </li>
                                         <li class="active">details demande</li>
                                     </ol>
                                 </div>
@@ -108,69 +126,108 @@
                                             <div class="form-group">
                                                 <label class="col-sm-5 control-label">Demande recue par</label>
                                                 <div class="col-sm-7">
-                                                    <p class="form-control-static"> <xsl:value-of select="Fichier/Header/nmIE"/></p>
+                                                    <p class="form-control-static"> 
+                                                        <xsl:value-of select="Fichier/Header/nmIE"/>
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-sm-5 control-label">Mail de l'emmeteur</label>
                                                 <div class="col-sm-7">
-                                                    <p class="form-control-static"><xsl:value-of select="Fichier/Header/MailExp"/></p>
+                                                    <p class="form-control-static">
+                                                        <xsl:value-of select="Fichier/Header/MailExp"/>
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-sm-5 control-label">Titre de la proposition</label>
                                                 <div class="col-sm-7">
-                                                    <p class="form-control-static"><xsl:value-of select="Fichier/Body/CollMess/Message/Prop/TitreP"/></p>
+                                                    <p class="form-control-static">
+                                                        <xsl:value-of select="Fichier/Body/CollMess/Message/Prop/TitreP"/>
+                                                    </p>
                                                 </div>
                                             </div>
+                                            <h3> Description de l'offre</h3>
                                             
-                                            <div class="form-group">
-                                                <label class="col-sm-5 control-label">Type de l'objet proposé</label>
-                                                <div class="col-sm-7">
-                                                    <p class="form-control-static"><xsl:value-of select="Fichier/Body/CollMess/Message/Prop/Offre/Objet/Type"/></p>
-                                                </div>
-                                            </div>
+                                            <xsl:for-each select="Fichier/Body/CollMess/Message/Prop/Offre/Objet">
+                                                <ul>
+                                                    <li>
+                                                        
+                                                        
+                                                        <p class="form-control-static">
+                                                            <b>Type d'objet proposé : </b>
+                                                            <xsl:value-of select="Type"/>
+                                                        </p>
+                                                        <ul>
+                                                            <xsl:for-each select="Description/Parametre">
+                                                                <li>
+                                                                    
+                                                                    <p class="form-control-static">
+                                                                        <b>Nom de la caracteristique :</b>
+                                                                        <xsl:value-of select="Nom"/>
+                                                                    </p>
+                                                                </li>
+                                                                <li>
+                                                                    
+                                                                    <p class="form-control-static">
+                                                                        <b>Valeur de la caracteristique : </b>
+                                                                        <xsl:value-of select="Valeur"/>
+                                                                    </p>
+                                                                </li>
+                                                            </xsl:for-each>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </xsl:for-each>
                                             
-                                            <div class="form-group">
-                                                <label class="col-sm-5 control-label">Nom de l'objet proposé</label>
-                                                <div class="col-sm-7">
-                                                    <p class="form-control-static"><xsl:value-of select="Fichier/Body/CollMess/Message/Prop/Offre/Objet/Description/Parametre/Nom"/></p>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-sm-5 control-label">Valeur de l'objet proposé</label>
-                                                <div class="col-sm-7">
-                                                    <p class="form-control-static"><xsl:value-of select="Fichier/Body/CollMess/Message/Prop/Offre/Objet/Description/Parametre/Valeur"/></p>
-                                                </div>
-                                            </div>
                                             
-                                            <div class="form-group">
-                                                <label class="col-sm-5 control-label">Type de l'objet demandé</label>
-                                                <div class="col-sm-7">
-                                                    <p class="form-control-static"><xsl:value-of select="Fichier/Body/CollMess/Message/Prop/Demande/Objet/Type"/></p>
-                                                </div>
-                                            </div>
+                                            <h3> Description de la demande</h3>
+                                            <xsl:for-each select="Fichier/Body/CollMess/Message/Prop/Demande/Objet">
+                                                <ul>
+                                                    <li>
+                                                       
+                                                        <p class="form-control-static">
+                                                            <b>Type d'objet demandé </b>
+                                                            <xsl:value-of select="Type"/>
+                                                        </p>
+                                                        <ul>
+                                                            <xsl:for-each select="Description/Parametre">
+                                                                <li>
+                                                                    
+                                                                    <p class="form-control-static">
+                                                                        <b>Nom de la caracteristique : </b>
+                                                                        <xsl:value-of select="Nom"/>
+                                                                    </p>
+                                                                </li>
+                                                                <li>
+                                                                    
+                                                                    <p class="form-control-static">
+                                                                        <b>Valeur de la caracteristique : </b>
+                                                                        <xsl:value-of select="Valeur"/>
+                                                                    </p>
+                                                                </li>
+                                                            </xsl:for-each>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </xsl:for-each>
                                             
-                                            <div class="form-group">
-                                                <label class="col-sm-5 control-label">Nom de l'objet demandé</label>
-                                                <div class="col-sm-7">
-                                                    <p class="form-control-static"><xsl:value-of select="Fichier/Body/CollMess/Message/Prop/Demande/Objet/Description/Parametre/Nom"/></p>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-sm-5 control-label">Valeur de l'objet demandé</label>
-                                                <div class="col-sm-7">
-                                                    <p class="form-control-static"><xsl:value-of select="Fichier/Body/CollMess/Message/Prop/Demande/Objet/Description/Parametre/Valeur"/></p>
-                                                </div>
-                                            </div>
-                                            
-                                            <p class="sr-only" id="nm-ie"><xsl:value-of select="/Fichier/Header/nmIE"/></p>
-                                            <p class="sr-only" id="nm-ir"><xsl:value-of select="/Fichier/Header/nmIR"/></p>
-                                            <p class="sr-only" id="mail-dest"><xsl:value-of select="/Fichier/Header/MailDest"/></p>
-                                            <p class="sr-only" id="mail-exp"><xsl:value-of select="/Fichier/Header/MailExp"/></p>
-                                            <p class="sr-only" id="msg-id"><xsl:value-of select="Fichier/Body/CollMess/Message/@MsgId"/></p>
-                                            <button class="btn btn-success" id="accepter-dmd">Accepter</button>
-                                            <button class="btn btn-danger" id="refuser-dmd">Refuser</button>
+                                            <p class="sr-only" id="nm-ie">
+                                                <xsl:value-of select="/Fichier/Header/nmIE"/>
+                                            </p>
+                                            <p class="sr-only" id="nm-ir">
+                                                <xsl:value-of select="/Fichier/Header/nmIR"/>
+                                            </p>
+                                            <p class="sr-only" id="mail-dest">
+                                                <xsl:value-of select="/Fichier/Header/MailDest"/>
+                                            </p>
+                                            <p class="sr-only" id="mail-exp">
+                                                <xsl:value-of select="/Fichier/Header/MailExp"/>
+                                            </p>
+                                            <p class="sr-only" id="msg-id">
+                                                <xsl:value-of select="Fichier/Body/CollMess/Message/@MsgId"/>
+                                            </p>
+                                           
                                         </form>
                                     </div>
                                 </div>
