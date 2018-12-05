@@ -13,5 +13,9 @@ public class Auth {
     @GeneratedValue
     private int id;
 
-    private String accAuth;
+    private String messageAuth = "demande traité";
+
+    private boolean accepte;
+
+    private String numAuth;
 }

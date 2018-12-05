@@ -14,10 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- *
- * @author gentile
- */
+
 @Controller
 public class MesPropController {
     @RequestMapping(value = "/mes_prop", method = RequestMethod.GET)

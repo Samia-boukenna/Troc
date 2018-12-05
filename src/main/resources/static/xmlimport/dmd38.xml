@@ -2,10 +2,10 @@
 <Fichier>
     <Header>
         <FicID>f976c04d-3d1e-43d4-a6b2-a102136b3ab4</FicID>
-        <nmIE>samia</nmIE>
-        <nmIR>test</nmIR>
-        <MailDest>test@hotmail.fr</MailDest>
-        <MailExp>samia@hotmail.fr</MailExp>
+        <nmIE>test</nmIE>
+        <nmIR>Samia</nmIR>
+        <MailDest>samia@gmail.com</MailDest>
+        <MailExp>jjjjj@hotmail.fr</MailExp>
     </Header>
     <Body>
         <CollMess NbOfTxs="1">

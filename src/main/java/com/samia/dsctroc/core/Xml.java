@@ -1,9 +1,6 @@
 package com.samia.dsctroc.core;
 
-import com.samia.dsctroc.models.Dmd;
-import com.samia.dsctroc.models.Fichier;
-import com.samia.dsctroc.models.Message;
-import com.samia.dsctroc.models.Utilisateur;
+import com.samia.dsctroc.models.*;
 import com.samia.dsctroc.repositories.DmdRepo;
 import com.samia.dsctroc.repositories.FichierRepo;
 import com.samia.dsctroc.repositories.MessageRepo;
@@ -153,6 +150,7 @@ public class Xml {
                 List<Fichier> fichiers = new ArrayList<>();
                 Utilisateur uE = utilisateurRepo.findByMail(document.getElementsByTagName("MailExp").item(0).getTextContent());
                 Utilisateur uR = utilisateurRepo.findByMail(document.getElementsByTagName("MailDest").item(0).getTextContent());
+                fic.setFicId(document.getElementsByTagName("FicID").item(0).getTextContent());
                 if (uE == null) {
                     uE = new Utilisateur();
                     uE.setNom(document.getElementsByTagName("nmIE").item(0).getTextContent());
@@ -307,5 +305,117 @@ public class Xml {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }{
+}
+    public void xmlCreerAuth(Fichier fichier) {
+        try {
+            Auth auth = fichier.getMessages().get(0).getAuth();
+            StringWriter stringWriter = new StringWriter();
+            XMLOutputFactory xMLOutputFactory = XMLOutputFactory.newInstance();
+            XMLStreamWriter xMLStreamWriter =
+                    xMLOutputFactory.createXMLStreamWriter(stringWriter);
+
+            xMLStreamWriter.writeStartDocument();
+            xMLStreamWriter.writeStartElement("Fichier");
+            xMLStreamWriter.writeStartElement("Header");
+            xMLStreamWriter.writeStartElement("FicID");
+            xMLStreamWriter.writeCharacters(fichier.getFicId());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("nmIE");
+            xMLStreamWriter.writeCharacters(fichier.getIE().getNom());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("nmIR");
+            xMLStreamWriter.writeCharacters(fichier.getIR().getNom());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("NumAuto");
+            xMLStreamWriter.writeCharacters(auth.getNumAuth());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("MailDest");
+            xMLStreamWriter.writeCharacters(fichier.getIR().getMail());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("MailExp");
+            xMLStreamWriter.writeCharacters(fichier.getIE().getMail());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();            //start of body
+            xMLStreamWriter.writeStartElement("Body");
+            //start of colMess
+            xMLStreamWriter.writeStartElement("CollMess");
+            xMLStreamWriter.writeAttribute("NbOfTxs", "1");
+            xMLStreamWriter.writeStartElement("Message");
+            xMLStreamWriter.writeAttribute("MsgId", fichier.getMessages().get(0).getMsgId());
+            xMLStreamWriter.writeStartElement("Dte");
+            xMLStreamWriter.writeCharacters(fichier.getMessages().get(0).getDte().toString());
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("DureeValideMsg");
+            xMLStreamWriter.writeCharacters(Integer.toString(fichier.getMessages().get(0).getDureeValide()));
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeStartElement("Auth");
+            xMLStreamWriter.writeStartElement("Rep");
+            if (auth.isAccepte()) {
+                xMLStreamWriter.writeStartElement("AccAuth");
+                xMLStreamWriter.writeCharacters(auth.getMessageAuth());
+                xMLStreamWriter.writeEndElement();
+            } else {
+                xMLStreamWriter.writeStartElement("RefAuth");
+                xMLStreamWriter.writeCharacters(auth.getMessageAuth());
+                xMLStreamWriter.writeEndElement();
+            }
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndElement();
+            //end of colMess
+            xMLStreamWriter.writeEndElement();
+            //end of body
+            xMLStreamWriter.writeEndElement();
+            //end of fichier
+            xMLStreamWriter.writeEndElement();
+            xMLStreamWriter.writeEndDocument();
+
+
+            xMLStreamWriter.flush();
+            xMLStreamWriter.close();
+
+            String xmlString = stringWriter.getBuffer().toString();
+            stringWriter.close();
+            ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/");
+            String chemin = classPathResource.getFile().getPath() + "/auth" + fichier.getId() + ".xml";
+
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(new InputSource(new StringReader(xmlString)));
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            File file = new File(chemin);
+            if (file.createNewFile()) {
+                StreamResult result = new StreamResult(file);
+                transformer.transform(source, result);
+            }
+            stringWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public boolean verifierFichierTraite(String chemin){
+
+        try {
+            File file = new File(chemin);
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(file);
+            if(document.getElementsByTagName("FicID").getLength() != 1)
+                return false;
+
+            String ficId = document.getElementsByTagName("FicID").item(0).getTextContent();
+            if(fichierRepo.estTraite(ficId) != 0)
+                return false;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

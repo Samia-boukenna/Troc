@@ -1,13 +1,7 @@
 package com.samia.dsctroc.controllers;
 
-import com.samia.dsctroc.models.Dmd;
-import com.samia.dsctroc.models.Fichier;
-import com.samia.dsctroc.models.Message;
-import com.samia.dsctroc.models.Utilisateur;
-import com.samia.dsctroc.repositories.DmdRepo;
-import com.samia.dsctroc.repositories.FichierRepo;
-import com.samia.dsctroc.repositories.MessageRepo;
-import com.samia.dsctroc.repositories.UtilisateurRepo;
+import com.samia.dsctroc.models.*;
+import com.samia.dsctroc.repositories.*;
 import com.samia.dsctroc.core.Xml;
 import java.io.File;
 import java.io.IOException;
@@ -19,10 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static java.util.Calendar.getInstance;
 import org.springframework.core.io.ClassPathResource;
@@ -36,6 +27,9 @@ public class DmdController {
 
     @Autowired
     private DmdRepo dmdRepo;
+
+    @Autowired
+    private AuthRepo authRepo;
 
     @Autowired
     private MessageRepo messageRepo;
@@ -130,19 +124,37 @@ public class DmdController {
     String createContreProposition(@RequestBody String propoString) {
         System.out.println(propoString);
         JSONObject jsonObject = new JSONObject(propoString);
-        return "[\"traite\"]";
-    }
+        Optional<Message> optionalMessage = messageRepo.findById(Integer.parseInt(jsonObject.get("msgId").toString()));
+        if(jsonObject.get("type").toString().equals("accepter")){
+            if(optionalMessage.isPresent()){
+                Message message = optionalMessage.get();
+                Auth auth = new Auth();
+                auth.setAccepte(true);
+                auth.setNumAuth((UUID.randomUUID().toString()));
+                authRepo.save(auth);
+                message.setAuth(auth);
+                messageRepo.save(message);
+                xml.xmlCreerAuth(message.getFichier());
+                return "[\"accep\"]";
 
-    @GetMapping("/traitement")
-    public String traiter() throws Exception {
+            }
 
-        ClassPathResource cpr = new ClassPathResource("/static/xmlimport/");
-        final File folder = cpr.getFile();
-        if (folder.isDirectory()) {
-            for (final File fileEntry : folder.listFiles()) {
-                xml.xmlLireDmd(fileEntry.getPath());
+        }else if(jsonObject.get("type").toString().equals("refuser")){
+            if(optionalMessage.isPresent()){
+                Message message = optionalMessage.get();
+                Auth auth = new Auth();
+                auth.setAccepte(false);
+                auth.setNumAuth((UUID.randomUUID().toString()));
+                authRepo.save(auth);
+                message.setAuth(auth);
+                messageRepo.save(message);
+                xml.xmlCreerAuth(message.getFichier());
+                return "[\"ref\"]";
             }
         }
-        return "traitement";
+        return "[\"erreur\"]";
     }
+
+
+
 }
