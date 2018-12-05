@@ -16,7 +16,5 @@ public class Objet {
     @OneToOne
     private Description description;
 
-    @ManyToOne
-    @JoinColumn(name = "prop")
-    private Prop prop;
+  
 }

@@ -19,9 +19,6 @@ public class Prop {
 
     private String titre;
 
-    // type soit offre soit demande
-    private String type;
-
     @OneToOne
     private Offre offre;
     @OneToOne

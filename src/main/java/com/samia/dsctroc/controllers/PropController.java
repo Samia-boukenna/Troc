@@ -79,23 +79,15 @@ public class PropController {
     public String afficherPageProp(Model model, HttpServletRequest request) throws IOException {
         Fichier fichier = new Fichier();
         Message message = new Message();
-        
-        ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/");
-        File rep = classPathResource.getFile();
-        File[] listFic = rep.listFiles();
-        for(int i = 0; i < listFic.length; i++ ){
-            
-                System.out.println("File " + listFic[i].getName());
-           
-        }
-        
+       
+        model.addAttribute("propositions", propRepo.findAll());
         model.addAttribute("fichier", fichier);
         model.addAttribute("message", message);
         return "nouvelle_prop";
     }
 
     @PostMapping("/nouvelle_prop")
-    public String creerDmd(@ModelAttribute("fichier") Fichier f,@ModelAttribute("message") Message message, Model model) {
+    public String creerDmd(int idProposition,@ModelAttribute("fichier") Fichier f,@ModelAttribute("message") Message message, Model model) {
         Fichier fic = new Fichier();
         Date dateActuelle = new Date();
         List<Message> messages = new ArrayList<>();
@@ -108,17 +100,8 @@ public class PropController {
         fic.setIE(uE);
         fic.setIR(uR);
         fichierRepo.save(fic);
-        Prop prop = message.getProp();
-        paramRepo.saveAll(prop.getOffre().getObjets().get(0).getDescription().getParametres());
-        paramRepo.saveAll(prop.getDemande().getObjets().get(0).getDescription().getParametres());
-        descRepo.save(prop.getDemande().getObjets().get(0).getDescription());
-        descRepo.save(prop.getOffre().getObjets().get(0).getDescription());
-        objetRepo.saveAll(prop.getOffre().getObjets());
-        objetRepo.saveAll(prop.getDemande().getObjets());
-        offreRepo.save(prop.getOffre());
-        demandeRepo.save(prop.getDemande());
-        propRepo.save(prop);
-
+       
+message.setProp(propRepo.findById(idProposition).get());
         message.setDte(dateActuelle);
         message.setFichier(fic);
 

@@ -5,8 +5,11 @@
  */
 package com.samia.dsctroc.controllers;
 
+import com.samia.dsctroc.core.ParserXml;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -26,8 +29,29 @@ public class MesDmdController {
         ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/dmd/");
         File repert = classPathResource.getFile();
         File[] listFic = repert.listFiles();
-        
-        model.addAttribute("listFic", listFic);
+        ParserXml doc;
+        List<File> listeFicValid=new ArrayList();
+        List<File> listeFicInvalid=new ArrayList();
+         List<File> listeFicValidExpired=new ArrayList();
+        for(int i=0;i<listFic.length;i++){
+            if(!listFic[i].isDirectory()){
+            doc=new ParserXml(listFic[i]);
+            if(doc.getDocument()!=null && doc.isDmd()){
+                if(doc.isOnTime())
+                 listeFicValid.add(listFic[i]);
+                else
+                 listeFicValidExpired.add(listFic[i]);
+            }
+            else
+               listeFicInvalid.add(listFic[i]);
+            }
+            
+        }
+           
+         
+        model.addAttribute("listFicValid", listeFicValid);
+        model.addAttribute("listFicValidExpired", listeFicValidExpired);
+        model.addAttribute("listFicInvalid", listeFicInvalid);
         
         return "mes_dmd";
     }   

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
+    <title>Ample Admin Template - The Ultimate Multipurpose admin template</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/sidebar-nav.min.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <link href="css/colors/default.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="fix-header">
+    <!-- ============================================================== -->
+    <!-- Preloader -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Wrapper -->
+    <!-- ============================================================== -->
+    <div id="wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <th:block th:include="parts/navbar :: navbar"></th:block>
+
+        <!-- End Top Navigation -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <th:block th:include="parts/sidebar :: sidebar"></th:block>
+
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page Content -->
+        <!-- ============================================================== -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Nouvelle demande</h4> </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <ol class="breadcrumb">
+                            <li><a href="/">Troc</a></li>
+                            <li class="active">Nouvelle-dmd</li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <!-- .row -->
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 col-xs-12">
+                         <ul >
+            <li th:each="v : ${propositions}">
+                <div>
+                    [[${v}]]
+                    <a th:href="@{'/voir_proposition?idProp=' + ${v.id}}">(modifier details)</a>
+                </div>   
+                
+            </li>
+        </ul>
+                        <div class="alert alert-success" role="alert" th:if="${msgConf != ''}" th:text="${msgConf}">...</div>
+                        <div class="white-box">
+                            <form class="form-horizontal form-material" method="post" action="/ajouter_proposition" th:object="${newProp}">
+                                <div class="form-group">
+                                    <label for="nomIe" class="col-md-12">Nom de la proposition</label>
+                                    <div class="col-md-12">
+                                        <input type="text" th:field="*{titre}"  class="form-control form-control-line"> </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nomIe" class="col-md-12">Objet proposé</label>
+                                    <div class="col-md-12">
+                                       <select th:name="offreObjet">
+    <option th:each="i : ${objets}" th:value="${i.getId()}" th:text="${i.type}"></option>
+</select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nomIe" class="col-md-12">Objet demandé</label>
+                                    <div class="col-md-12">
+                                       <select th:name="demandeObjet">
+    <option th:each="i : ${objets}" th:value="${i.getId()}" th:text="${i.type}"></option>
+</select>
+                                         </div>
+                                    </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-success">Envoyer la demande</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+            <th:block th:include="parts/footer :: footer"></th:block>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+</body>
+
+</html>

@@ -50,15 +50,6 @@ public class DmdController {
         Fichier fichier = new Fichier();
         Message message = new Message();
         
-        ClassPathResource classPathResource = new ClassPathResource("/static/xmlexport/");
-        File rep = classPathResource.getFile();
-        File[] listFic = rep.listFiles();
-        for(int i = 0; i < listFic.length; i++ ){
-            
-                System.out.println("File " + listFic[i].getName());
-           
-        }
-        
         model.addAttribute("fichier", fichier);
         model.addAttribute("message", message);
         return "nouvelle_dmd";
