@@ -20,7 +20,7 @@ import org.springframework.core.io.ClassPathResource;
 
 
 @Controller
-public class DmdController {
+public class GestionDmdController {
 
     @Autowired
     private UtilisateurRepo utilisateurRepo;

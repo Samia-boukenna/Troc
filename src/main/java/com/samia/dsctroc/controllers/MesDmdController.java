@@ -105,6 +105,7 @@ public class MesDmdController {
         Optional<Message> optionalMessage = messageRepo.findById(Integer.parseInt(jsonObject.get("msgId").toString()));
         if(jsonObject.get("type").toString().equals("accepter")){
             if(optionalMessage.isPresent()){
+                
                 Message message = optionalMessage.get();
                 Auth auth = new Auth();
                 auth.setAccepte(true);

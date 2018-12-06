@@ -48,7 +48,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class PropController {
+public class GestionPropController {
 
     @Autowired
     private UtilisateurRepo utilisateurRepo;
@@ -84,6 +84,7 @@ public class PropController {
        List<Utilisateur> utilisateursAutorises=new ArrayList();
        for(int i=0;i<allFiles.size();i++)
            if(allFiles.get(i).getMessages().get(0).getAuth()!=null)
+               if(allFiles.get(i).getMessages().get(0).getDmd() != null)
                if(allFiles.get(i).getMessages().get(0).getDmd().isReceved())
                     utilisateursAutorises.add(allFiles.get(i).getIE());
                else

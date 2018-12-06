@@ -1,0 +1,420 @@
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[frenchb]{babel}
+\usepackage[bookmarks=true]{hyperref}
+\usepackage{lmodern}
+\usepackage{graphicx}
+
+
+\author{Gentile Pierre, Didier-Roche François}
+\date{\today}
+\title{Document de spécification des exigences}
+
+\frenchbsetup{StandardLists=true}
+\begin{document}
+
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\section{Introduction}
+\subsection{Formulation du besoin}
+L'application décrite dans ce document permet de mettre en relation des personnes souhaitant réaliser du troc sans centralisation des données échangées par les utilisateurs. On peut découper ce besoin en plusieurs parties.
+\subsubsection{Demande d'autorisation de troc}
+Pour éviter les demande de troc trop nombreuses, l'application doit proposer un système de demande et d'acceptation de troc. Lorsqu'un utilisateur veut troquer avec un autre utilisateur, il doit d'abord lui envoyer une demande de troc en indiquant les informations relatives au destinataire (nom du destinataire, mail du destinataire). Si le récepteur de la demande accepte, l'utilisateur qui a fait sa demande peut alors envoyer des propositions de troc à l'utilisateur qui l'a acceptée.
+\subsection{Création d'un objet}
+L'utilisateur a la possibilité de créer un objet avec son type et les caracteristiques de cet objet(neuf, usé, peut usé, type de matériaux, ...).
+\subsection{Création de proposition}
+Une fois les objets ajoutés, l'utilisateur peut créer une proposition avec un nom,
+les objets qu'il propose et ceux qu'il demande en echange.
+\subsubsection{Proposition de troc}
+Une fois la demande acceptée, l'utilisateur peut créer sa proposition de troc en indiquant plusieurs informations nécessaires : nom du destinataire, mail du destinataire, durée de validité de la proposition, la proposition créée au préalable.
+\subsubsection{Visualisation des demandes}
+L'utilisateur peut visualiser les demandes qu'il a envoyé ainsi que celles qu'il a reçu via une liste de liens vers ces différentes demandes.L'affichage de ces fichiers se fait en fonction de la validité de ceux ci. En cliquant sur ces liens, l'utilisateur peut voir un résumé de la demande qu'il a effectué ou qu'il a reçu. Dans le cas d'une demande reçu, l'utilisateur doit avoir la possibilité d'accepter ou refuser cette demande via des boutons.
+\subsubsection{Acceptation des demandes}
+Lorsqu'un utilisateur accepte une demande, le système enregistre ce choix dans une base de donnée locale. Il envoie ensuite un message au demandeur pour que son système puisse lui aussi enregistrer cette acceptation mutuelle de troc. Ainsi, toutes les propositions de troc entre ces deux utilisateurs pourront avoir lieu.
+
+\subsubsection{Refus des demandes}
+Lorsqu'un utilisateur refuse une demande, le système crée une réponse negative et il n'y auras donc aucune suite à cette demande.
+
+\subsubsection{Visualisation des propositions}
+L'utilisateur peut visualiser les propositions qu'il a envoyé ainsi que celles qu'il a reçu via une liste de liens vers ces différentes propositions. En cliquant sur ces liens, l'utilisateur peut voir un résumé de la propositions selectionné. Dans le cas d'une proposition reçu, l'utilisateur doit avoir la possibilité d'accepter ou refuser cette demande via des boutons.
+
+\subsubsection{Acceptation des propositions}
+Lorsqu'un utilisateur accepte une proposition, le système notifie l'envoyeur de cette proposition que cette dernière a été accepté.
+
+\subsubsection{Refus de proposition}
+Lorsqu'un utilisateur refuse une proposition, le système crée une réponse negative et il n'y auras donc aucune suite à cette proposition.
+
+\subsubsection{Validité d'un fichier}
+Le fichier doit être rejeté completement si :
+\begin{itemize}
+  \item il dépasse la taille de 5ko.
+  \item il ne respecte pas la xsd définit.
+  \item un checksum ne correspond pas.
+  \item si il a déjà été integré.
+\end{itemize}
+
+\subsubsection{Validité d'un message}
+Le message doit être rejeté completement si :
+\begin{itemize}
+  \item une ou plusieurs informations contient 1 caractère ou moins.
+  \item une ou plusieurs informations contient 1000 caractères ou plus.
+  \item une ou plusieurs informations contiennent des caractères non ASCII.
+  \item sa durée de validitée est expirée.
+  \item sa durée de validitée est supérieure à trois mois.
+\end{itemize}
+
+
+
+
+\section{Description des sous tâches}
+
+\subsection{Création d'une base de donnée locale pour stocker les informations nécessaires au fonctionnement du système}
+Cette tâche ce décompose en trois sous taches :
+\begin{itemize}
+  \item Réfléchir au informations qui nécéssite un enregistrement dans une base de données locale.
+  \item Réfléchir à l'architecture de cette base de donnée.
+  \item Créer la base de donnée.
+\end{itemize}
+
+
+\subsection{Création d'un formulaire de nouvelles demandes de troc}
+Cette tâche consiste à créer un formulaire permetant à un utilisateur d'inserer les données nécessaires à la demande de troc décrite dans la formulation du besoin et de soumettre ce formulaire au système.
+\subsection{Création d'un système de traitement du formulaire de demandes de troc}
+Cette tâche consiste à traiter les informations entrée par l'utilisateur. Elle ce divise en deux sous taches :
+\begin{itemize}
+  \item Créer le fichier (xml) correspondant au informations entrées par l'utilisateur.
+  \item Controller la validitée des informations (validité du fichier et validité du message).
+\end{itemize}
+
+\subsection{Création d'un système d'affichage des demandes de troc}
+Cette tache consiste à afficher les demandes envoyées et des demandes recues. Elle ce divise en deux sous tâches :
+\begin{itemize}
+  \item Afficher la liste des demandes envoyées et des demandes recues.
+  \item Afficher les informations de la demande que l'utilisateur sélectionne ainsi que (pour les reçues) les boutons Accepter/Refuser.
+\end{itemize}
+\subsection{Création d'un système d'acceptation, refus des demandes de troc}
+Cette tache consiste à créer un système capable de réagir à l'acceptation ou au refus d'une demande . 
+\begin{itemize}
+  \item Si c'est une demande recue, l'acceptation/refus se fera par bouton sur le site et enverra un xml de réponse .
+  \item Si c'est une demande envoyée, l'acceptation/refus se fera par lecture d'un fichier d'acceptation/refus.
+\end{itemize}
+
+\subsection{Création d'un formulaire de nouvelles propositions de troc}
+Cette tâche consiste à créer un formulaire permetant à un utilisateur d'inserer les données nécessaires à la proposition de troc décrite dans la formulation du besoin et de soumettre ce formulaire au système.
+\subsection{Création d'un système de traitement du formulaire de propositions de troc}
+Cette tâche consiste à traiter les informations entrée par l'utilisateur. Elle ce divise en deux sous taches :
+\begin{itemize}
+  \item Créer le fichier correspondant au informations entrées par l'utilisateur.
+  \item Controller la validitée des informations (validité du fichier et validité du message).
+\end{itemize}
+\subsection{Création d'un système d'affichage des propositions de troc}
+Cette tache consiste à afficher les propositions envoyées et des propositions recues. Elle ce divise en deux sous tâches :
+\begin{itemize}
+  \item Afficher la liste des propositions envoyées et des propositions recues.
+  \item Afficher les informations de la proposition que l'utilisateur sélectionne ainsi que (pour les reçues) les boutons Accepter/Refuser.
+\end{itemize}
+\subsection{Création d'un système d'acceptation, refus des propositions de troc}
+Cette tache consiste à créer un système capable de réagir à l'acceptation ou au refus d'une proposition . 
+\begin{itemize}
+  \item Si c'est une demande recue, l'acceptation/refus se fera par bouton sur le site et enverra un xml de réponse .
+  \item Si c'est une demande envoyée, l'acceptation/refus se fera par lecture d'un fichier d'acceptation/refus.
+\end{itemize}
+Pour la réponse a une proposition, la contre proposition n'est malheureusement pas disponible.
+\subsection{Tester le système}
+Cette tache ce divise en deux sous tâches :
+\begin{itemize}
+  \item Imaginer les test unitaires qui doivent être effectués sur le système.
+  \item Effectuer les test qui ont été imaginés.
+\end{itemize}
+
+
+\section{Intégration}
+\subsection{Technologies utilisées}
+Pour que l'application soit légère et rapide d'utilisation, nous avons décider de partir sur un site web. Ainsi, l'utilisateur n'a pas besoin de telecharger quoi que ce soit sur sa machine.
+
+Étant donné la richesse du site web (formulaire, base de donnée, création de fichiers) nous avons décider d'utiliser le framework spring pour développer rapidement un maximum de fonctionnalitées.
+
+Nous avons utilisé thymeleaf qui fonctionne en symbiose avec le framework spring et qui nous permet de rendre nos pages dynamique.
+
+Nous avons utilisé H2 qui nous permet d'inserer, suprimmer, modifier facilement des informations en base de donnée.
+
+Nous avons utilisé XSL pour représenter les données contenue dans les fichier XML de manière plus lisible et plus facile à comprendre pour un utilisateur lambda.
+
+Nous avons utilisé DOM et SAX pour le traitement des fichiers xml.
+\subsection{Modèle MVC}
+L'application que nous avons développer fonctionne sur un support web. Ce site web repose sur une architecture MVC (model, view, controller). Voici comment ces trois composants sont construits :
+
+\paragraph{Model}
+
+Nos modèles sont des classes java construites en relation avec la base de donnée et necessaires à la représentation des données. Parmis ces classes, on peut citer :
+\begin{itemize}
+  \item La classe \underline{Utilisateur} avec les attributs \textit{Nom}, \textit{Prénom}, \textit{Mail} et un identifiant unique.
+  \item La classe \underline{Dmd} avec les attributs \textit{Description}, \textit{DateDebut}, \textit{DateFin}.
+  \item La classe \underline{Prop} avec les attributs \textit{Titre}, \textit{Type}, \textit{Offre}, \textit{Demande}.
+\end{itemize}
+
+\paragraph{Vue}
+Nos vue sont composée de page html, de style et d'instruction thymeleaf permetant la communication entre les vue et les controller. Ce sont donc des pages dynamique réagissant aux actions que l'utilisateurs effectue.
+
+\paragraph{Controller}
+Nos controlleurs permettent à l'application de faire le lien entre les vue et de communiquer avec ces denières en faisant passer des modèles.
+
+
+\subsection{Couverture fonctionnelle obtenue}
+À la suite de ce développement, le système propose les fonctionnalitées suivantes :
+\begin{itemize}
+  \item Envoyer une demande d'amitié".
+  \item Recevoir et traiter une demande "d'amitié".
+  \item Afficher les demandes de troc.
+  \item Accepter/refuser une demande "d'amitié".
+  \item Recevoir et traiter les acceptations/refus de demande "d'amitié".
+  \item Envoyer une proposition de troc.
+  \item Recevoir et traiter une propositions de troc.
+  \item Afficher les propositions de troc.
+  \item Accepter/refuser une proposition de troc.
+\end{itemize}
+
+
+À la suite de ce développement, le système peut :
+\begin{itemize}
+  \item Vérifier si un fichier est valide.
+  \item Vérifier si un message est valide.
+  \item Créer et envoyer une réponse en cas d'acceptation/refus d'une demande,création d'une demande et création d''une proposition.
+\end{itemize}
+
+\section{Interface utilisateur}
+L'interface utilisateur est construite de manière à ce que toutes les pages principales du site web soit accessibles directement à partir de n'importe quelle pages. Pour cela nous avons utilisé une sidebar avec les liens vers toutes les pages principales du site web.
+
+\begin{center}
+\includegraphics[scale=0.5]{Captures/sidebar.png}
+\end{center}
+
+Voici un shémat représentant l'accessibilité à partir de n'importe quelle page:
+
+\begin{center}
+\includegraphics[scale=0.2]{liensPagesTroc.jpg}
+\end{center}
+
+
+On peut creer une demande de troc via un formulaire :
+
+\begin{center}
+\includegraphics[scale=0.2]{Captures/nouvelleDemande.png}
+\end{center}
+
+On peut ensuite visualiser ces demandes. Sur l'image ci dessous on voit tous les types de demandes possibles (demande expirée, demande aceptée, demande invalide et demande pas encore acceptée ni expirée ni invalide) :
+
+\begin{center}
+\includegraphics[scale=0.3]{Captures/demandeEnvoye.png}
+\end{center}
+
+En cliquant sur voir détails, on peut voir les détails de la demande de manière ordonée :
+
+\begin{center}
+\includegraphics[scale=0.3]{Captures/detailDemande.png}
+\end{center}
+
+Les demande de troc recues sont affichée comme suit avec les boutons accepter/refuser on peut voir directement quand on a déjà accepter une demande :
+\begin{center}
+\includegraphics[scale=0.3]{Captures/demandeRecu.png}
+\end{center}
+
+On peut ajouter un objet via un formulaire :
+
+\begin{center}
+\includegraphics[scale=0.3]{Captures/ajoutObjet.png}
+\end{center}
+
+On peut ensuite modifier l'objet pour lui ajouter d'autres paramètres :
+
+\begin{center}
+\includegraphics[scale=0.3]{Captures/modifObjet.png}
+\end{center}
+
+Un fois qu'on a créer des objets, on peut créer une proposition en selectionnant les objets créer et en spécifiant un titre :
+
+\begin{center}
+\includegraphics[scale=0.3]{Captures/gererProp.png}
+\end{center}
+
+Après avoir créer une proposition, on peut lui ajouter dautre objets soit dans les objet demandé soit dans les objets souhaités :
+
+\begin{center}
+\includegraphics[scale=0.3]{Captures/ajoutObj.png}
+\end{center}
+
+Une fois la proposition crée, on peut l'envoyer grâce à un formulaire listant toutes les proposition et tous nos \og amis \fg{} :
+
+\begin{center}
+\includegraphics[scale=0.3]{Captures/envoieProp.png}
+\end{center}
+
+On peut ensuite visualiser cette demande envoyée :
+
+\begin{center}
+\includegraphics[scale=0.3]{Captures/detailProp.png}
+\end{center}
+
+Enfin, si l'on recoit une proposition, on peut l'accepeter ou la refuser de la même manière que pour les demandes reçues :
+
+\begin{center}
+\includegraphics[scale=0.3]{Captures/propRecu.png}
+\end{center}
+
+\newpage
+
+
+\section{Plan et réalisation des tests}
+
+\begin{center}
+    \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+      \hline
+      \textbf{Test éffectué} & \textbf{Résultat attendu} & \textbf{Résultat observé} \\
+      \hline
+
+      Je clique sur un lien dans la sidebar&
+      Le système me redirige vers la page correspondante&
+      = au résultat attendu\\
+
+      \hline
+      \hline
+      Je crée une demande valide et j'appuie sur envoyer&
+      Le système crée le fichier de demande et il m'indique qu'il à bien créer la demande&
+      = au résultat attendu\\
+
+      \hline
+      \hline
+      Je crée une demande invalide et j'appuie sur envoyer&
+      Le système m'indique les champs qui sont invalides&
+      = au résultat attendu\\
+
+      \hline
+      \hline
+      Je crée une proposition valide et j'appuie sur envoyer&
+      Le système m'indique qu'il à bien créer la proposition&
+      = au résultat attendu\\
+
+      \hline
+      \hline
+      Je crée une proposition invalide et j'appuie sur envoyer&
+      Le système m'indique les champs qui sont invalides&
+      = au résultat attendu\\
+
+      \hline
+      \hline
+      Je vais sur la page mes demandes envoyées ou mes demandes reçues&
+      Le système m'affiche la liste complètes et correcte de mes demandes envoyée ou reçue&
+      = au résultat attendu\\
+
+      \hline
+      \hline
+      Je clique sur l'une des demandes&
+      Le système m'affiche la demande en question et si c'est une demande recue, il m'affiche les bouttons accepter/refuser&
+      = au résultat attendu\\
+
+      \hline
+      \hline
+      Je clique sur accepter&
+      Le système créer un fichier de réponse pour le demandeur&
+      = au résultat attendu\\
+
+      \hline
+      \hline
+      Je clique sur refuser&
+      Les système me renvoie sur la liste des demandes recue et m'indique que la demande à été refusé&
+      = au résultat attendu
+      \\ 
+
+      \hline
+      \hline
+      Je vais sur la page mes propositions envoyées ou mes propositions reçues&
+      Le système m'affiche la liste complètes et correcte de mes propositions envoyée ou reçue et dans le cas d'un proposition recue, j'ai les boutons accepter/refuser&
+      = au résultat attendu
+      \\
+
+      \hline
+      \hline
+      Je clique sur l'une des proposition&
+      Le système m'affiche la proposition en question&
+      = au résultat attendu
+      \\
+
+      \hline
+      \hline
+      Je clique sur accepter&
+      Le système créer un fichier de réponse pour le demandeur&
+      Fonctionne pour les demandes mais pas pour les propositions
+      \\
+
+      \hline
+      \hline
+      Je clique sur refuser&
+      Les système me renvoie sur la liste des propositions recue et de ne vois plus la proposition que j'ai refuser&
+      Fonctionne pour les demandes mais pas pour les propositions
+      \\
+      
+      \hline
+      \hline
+      Je recois un fichier de demande xml invalide&
+      Le système ne traite pas le fichier&
+      =au résultat attendu\\
+      
+      \hline
+      \hline
+      Je recois un fichier de demande xml valide&
+      Le système traite le fichier et me notifie de sa présence sur le site&
+      =au résultat attendu\\
+      
+      \hline
+      \hline
+      Je recois un fichier de proposition xml invalide&
+      Le système ne traite pas le fichier&
+      =au résultat attendu\\
+
+      \hline
+      \hline
+      Je recois un fichier de proposition xml valide&
+      Le système traite le fichier et me notifie de sa présence sur le site&
+      =au résultat attendu\\
+      
+       \hline
+      \hline
+      Je recois un fichier d'autorisation xml valide&
+      Le système traite le fichier et autorise les messages entre les deux utilisateurs&
+      =au résultat attendu\\
+      \hline
+      
+             \hline
+      \hline
+      Je recois un fichier d'autorisation xml invalide&
+       Le système ne traite pas le fichier&
+	=au résultat attendu\\
+      \hline
+
+    \end{tabular}
+  \end{center}
+
+\section{Perspectives}
+Étant donné un temps limité mais surtout le nombre élevé de projet en parallèle, le projet est améliorable à commencer par un réel système d'utilisateurs avec inscription et connexion. Mais à nos yeux, le plus gros manque à cette application est une couche réseau qui permetrait aux utilisateurs de pouvoir s'envoyer des fichiers à distance. Avec cette couche réseau, nous pensons que cette application pourrait être utile dans certaines circonstances.
+
+\section{Conclusion}
+Avec plus de temps, nous pensons que ce projet aurait pu être plus abouti et peut être assez pour le rendre utilisable au grand public. Nous sommes tout de même fiers de ce que nous avons pû produire.
+Ce projet nous à apporté de nouvelles compétences et visions pour mettre en place la persistance et l'échange des données tout en limitant la surcharge que peut engendrer une application classique. Enfin ce projet nous a aussi permit d'aquerir plus d'expérience dans l'utilisation du framwork spring.
+
+
+
+
+
+
+
+
+
+
+\end{document}

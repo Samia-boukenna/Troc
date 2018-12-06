@@ -21,6 +21,8 @@ public class xmlBatch {
             ParserXml atester;
             if (folder.isDirectory()) {
                 for (final File fileEntry : folder.listFiles()) {
+                    if(fileEntry.length()>5000)
+                        return;
                    atester =new ParserXml(fileEntry);
                    
                     if(atester.getDocument()!=null){

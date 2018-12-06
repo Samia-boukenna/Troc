@@ -202,7 +202,6 @@ public class Xml {
                 List<Parametre> listeparam=new ArrayList();
                 Set<Objet> listeobj=new HashSet();
                 NodeList objetsListOffre=document.getElementsByTagName("Offre").item(0).getChildNodes();
-                System.out.println(objetsListOffre.item(0).getNodeName());
                 NodeList objetParam;
                     
                 for(int i=0;i<objetsListOffre.getLength() ;i++){
@@ -211,7 +210,6 @@ public class Xml {
                     listeparam=new ArrayList();
                     listeobj=new HashSet();
                     objetParam=objetsListOffre.item(i).getChildNodes().item(1).getChildNodes();
-                    System.out.println(objetParam);
                     objet.setType(objetsListOffre.item(i).getFirstChild().getTextContent());
                     for(int k=0;k<objetParam.getLength();k++){
                         param=new Parametre();
@@ -255,8 +253,6 @@ public class Xml {
                  demande.setObjets(listeobj);
                  prop.setDemande(demande);
                 demandeRepo.save(demande);
-                    
-                    System.out.println(prop);
                 propRepo.save(prop);
                 message.setProp(prop);
                 message.setDureeValide(Integer.parseInt(document.getElementsByTagName("DureeValideMsg").item(0).getTextContent()));
@@ -589,13 +585,17 @@ public void xmlLireAuth(String chemin) {
             Document document = documentBuilder.parse(file);
             if(document.getElementsByTagName("FicID").getLength() != 1)
                 return false;
-
+           
             String ficId = document.getElementsByTagName("FicID").item(0).getTextContent();
             if(type.equals("auth")){
                  if(fichierRepo.estTraite(ficId) != 1)
                      return false;
              Fichier fic = fichierRepo.findByFicid(document.getElementsByTagName("FicID").item(0).getTextContent()).get();
-             System.out.println(document.getElementsByTagName("FicID").item(0).getTextContent());
+             if(type.equals("prop") && fic.getMessages().get(0).getAuth()==null)
+                 return false;
+                    if(type.equals("prop") && fic.getMessages().get(0).getAuth()!=null && type.equals("prop") && !fic.getMessages().get(0).getAuth().isAccepte())
+                 return false;
+                 
                if(fic.getMessages().get(0).getAuth()!=null)
                    return false;
             }
