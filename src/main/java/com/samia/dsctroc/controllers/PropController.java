@@ -100,10 +100,16 @@ public class PropController {
     public String creerDmd(int idProposition,String userMail,@ModelAttribute("fichier") Fichier f,@ModelAttribute("message") Message message, Model model) {
         Fichier fic = new Fichier();
         Date dateActuelle = new Date();
+        
         List<Message> messages = new ArrayList<>();
         List<Fichier> fichiers = new ArrayList<>();
         Utilisateur uE = f.getIE();
         Utilisateur uR = utilisateurRepo.findByMail(userMail);
+        List<Fichier> all =uR.getFichiersEm();
+        all.addAll(uR.getFichiersRec());
+        for(int i=0;i<all.size();i++)
+            if(all.get(i).getMessages().get(0).getAuth()!=null)
+                fic.setFicid(all.get(i).getFicid());
         utilisateurRepo.save(uE);
         utilisateurRepo.save(uR);
 

@@ -1,6 +1,7 @@
 package com.samia.dsctroc.controllers;
 
 
+import com.samia.dsctroc.models.Description;
 import com.samia.dsctroc.models.Objet;
 import com.samia.dsctroc.models.Parametre;
 import com.samia.dsctroc.repositories.DescriptionRepo;
@@ -37,20 +38,30 @@ public class ObjetController {
     public String afficherObjets(Model model, HttpServletRequest request) throws IOException {
       List<Objet> objets=(List<Objet>) objetRepo.findAllByMineTrue();
         model.addAttribute("objets", objets);
+
+        model.addAttribute("param", new Parametre());
+        
+
         model.addAttribute("newObjet", new Objet());
         return "mes_objets";
     }
     @RequestMapping("/ajouter_objet")
-    public String ajoutObjet(Model model,Objet  newObjet) {
+    public String ajoutObjet(Model model,Objet  newObjet,Parametre param) {
         newObjet.setMine(true);
-        paramRepo.saveAll(newObjet.getDescription().getParametres());
-        descRepo.save(newObjet.getDescription());
+        List<Parametre>params=new ArrayList();
+        params.add(param);
+        Description desc=new Description();
+        desc.setParametres(params);
+        newObjet.setDescription(desc);
+        System.out.println(desc);
+        paramRepo.save(param);
+        descRepo.save(desc);
      objetRepo.save(newObjet);
         return "redirect:/mes_objets";
     }
 
  @RequestMapping("/voir_objet")
-    public String modifierObjet(int idObjet,Model model) {
+    public String voirModifierObjet(int idObjet,Model model) {
         Objet objet=objetRepo.findById(idObjet).get();
         model.addAttribute("parametre", new Parametre());
         model.addAttribute("objet",objet);
@@ -58,11 +69,15 @@ public class ObjetController {
     }
     @RequestMapping("/modif_objet")
     public String modifierObjet(int idObjet,Parametre parametre ,Model model) {
+        
         Objet objet=objetRepo.findById(idObjet).get();
+        if(parametre.getNom()!=null){
         objet.getDescription().getParametres().add(parametre);
+        System.out.println(objet.getDescription()+"  "+parametre);
         paramRepo.save(parametre);
         descRepo.save(objet.getDescription());
         objetRepo.save(objet);
+        }
         model.addAttribute("objet",objet);
         return "redirect:/voir_objet?idObjet=" + idObjet;
     }

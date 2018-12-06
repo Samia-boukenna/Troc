@@ -34,7 +34,7 @@ public class xmlBatch {
                     }
                     
                 }else if(atester.isProp()){
-                    
+                    System.out.println("fichier: "+fileEntry.getName());
                    if(xml.verifierFichierTraite(fileEntry.getPath(),"prop")) {
                         System.out.println("traitement en cours");
                         xml.xmlLireProp(fileEntry.getPath());
@@ -42,7 +42,7 @@ public class xmlBatch {
                         System.out.println("fichier deja traité");
                     }
                 }else if(atester.isAuth()){
-                    
+                    System.out.println("fichier: "+fileEntry.getName());
                    if(xml.verifierFichierTraite(fileEntry.getPath(),"auth")) {
                         System.out.println("traitement en cours");
                         xml.xmlLireAuth(fileEntry.getPath());
