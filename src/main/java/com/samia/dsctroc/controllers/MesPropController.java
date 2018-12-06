@@ -65,6 +65,7 @@ public class MesPropController {
         List<Fichier> fichiers = fichierRepo.findAllByMessagesPropRecevedTrue();
         System.out.println(fichiers.size());
         for (int i = 0; i < fichiers.size(); i++) {
+            System.out.println(fichiers.get(i).getFicid());
             System.out.println(fichiers.get(i).getIE().getNom());
             System.out.println(fichiers.get(i).getIR().getNom());
         }

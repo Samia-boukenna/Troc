@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?xml-stylesheet type="text/xsl" href="xsl/prop.xsl"?><Fichier>
+    <Header>
+        <FicID>38c97462-1e98-4be9-85ad-cf571b5474d9</FicID>
+        <NmIE>Pierre</NmIE>
+        <NmIR>sdv</NmIR>
+        <MailDest>jkhh@eu</MailDest>
+        <MailExp>Pierre@Pierre</MailExp>
+    </Header>
+    <Body>
+        <CollMess NbOfTxs="1">
+            <Message MsgId="_01a7811b-1f3a-49f2-80f8-8c028f7b5833">
+                <Dte>Thu Dec 06 15:13:36 CET 2018</Dte>
+                <DureeValideMsg>3</DureeValideMsg>
+                <Prop>
+                    <TitreP>iPhone contre Samsung + Micro ondes</TitreP>
+                    <Offre>
+                        <Objet>
+                            <Type>iPhone</Type>
+                            <Description>
+                                <Parametre>
+                                    <Nom>Stockage</Nom>
+                                    <Valeur>256Go</Valeur>
+                                </Parametre>
+                                <Parametre>
+                                    <Nom>RAM</Nom>
+                                    <Valeur>6Go</Valeur>
+                                </Parametre>
+                            </Description>
+                        </Objet>
+                    </Offre>
+                    <Demande>
+                        <Objet>
+                            <Type>Samsung</Type>
+                            <Description>
+                                <Parametre>
+                                    <Nom>Stockage</Nom>
+                                    <Valeur>256Go</Valeur>
+                                </Parametre>
+                                <Parametre>
+                                    <Nom>RAM</Nom>
+                                    <Valeur>6Go</Valeur>
+                                </Parametre>
+                            </Description>
+                        </Objet>
+                        <Objet>
+                            <Type>Micro onde</Type>
+                            <Description>
+                                <Parametre>
+                                    <Nom>Puissance</Nom>
+                                    <Valeur>600 W</Valeur>
+                                </Parametre>
+                            </Description>
+                        </Objet>
+                    </Demande>
+                </Prop>
+            </Message>
+        </CollMess>
+    </Body>
+</Fichier>

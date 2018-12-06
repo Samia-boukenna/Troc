@@ -95,12 +95,10 @@
                                         <tr th:each="fic : ${fichiers}">
                                             <td th:text="${fic.getIE().nom}"></td>
                                             <td th:text="${fic.getIR().nom}"></td>
-                                            <td th:text="${fic.messages.get(0).prop.dateDebut}"></td>
-                                            <td th:text="${fic.messages.get(0).prop.dateFin}"></td>
-                                            <td> 
-                                                <ul th:each="${fic.messages.get(0).prop.offre.description.parametres}">
-                                                    <li>
-                                                </ul></td>
+                                           
+                                            <td th:text="${fic.messages.get(0).getDte()}"></td>
+                                            <td th:text="${fic.messages.get(0).prop.getTitre()}"> 
+                                                   </td>
                                             
                                             <td th:text="${(fic.messages.get(0).auth == null) ? 'Pas encore traitée': (fic.messages.get(0).auth.accepte ? 'acceptée':'refusée')}"></td>
                                             <td>

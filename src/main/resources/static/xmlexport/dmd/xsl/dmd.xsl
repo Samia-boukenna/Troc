@@ -127,10 +127,18 @@
                                     <div class="row">
                                         <form class="form-horizontal">
                                             <div class="form-group">
+                                                <label class="col-sm-5 control-label">Expire le</label>
+                                                <div class="col-sm-7">
+                                                    <p class="form-control-static"> 
+                                                        <xsl:value-of select="Fichier/Body/CollMess/Message/Dmd/DateFin"/>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
                                                 <label class="col-sm-5 control-label">Demande recue par</label>
                                                 <div class="col-sm-7">
                                                     <p class="form-control-static"> 
-                                                        <xsl:value-of select="Fichier/Header/NmIE"/>
+                                                        <xsl:value-of select="Fichier/Header/NmIR"/>
                                                     </p>
                                                 </div>
                                             </div>

@@ -1,1 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><?xml-stylesheet type="text/xsl" href="xsl/dmd.xsl"?><Fichier><Header><FicID>38c97462-1e98-4be9-85ad-cf571b5474d9</FicID><NmIE>sdv</NmIE><NmIR>jkh</NmIR><MailDest>kjh@mi</MailDest><MailExp>jkhh@eu</MailExp></Header><Body><CollMess NbOfTxs="1"><Message MsgId="_948706a9-5f03-4ee0-90f5-446cab7e5dc2"><Dte>Thu Dec 06 03:18:49 CET 2018</Dte><DureeValideMsg>2</DureeValideMsg><Dmd><DescDmd>kh</DescDmd><DateDebut>Thu Dec 06 03:18:49 CET 2018</DateDebut><DateFin>Sat Dec 08 03:18:49 CET 2018</DateFin></Dmd></Message></CollMess></Body></Fichier>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?xml-stylesheet type="text/xsl" href="xsl/dmd.xsl"?><Fichier>
+    <Header>
+        <FicID>38c97462-1e98-4be9-85ad-cf571b5474d9</FicID>
+        <NmIE>sdv</NmIE>
+        <NmIR>jkh</NmIR>
+        <MailDest>kjh@mi</MailDest>
+        <MailExp>jkhh@eu</MailExp>
+    </Header>
+    <Body>
+        <CollMess NbOfTxs="1">
+            <Message MsgId="_948706a9-5f03-4ee0-90f5-446cab7e5dc2">
+                <Dte>Thu Dec 06 03:18:49 CET 2018</Dte>
+                <DureeValideMsg>2</DureeValideMsg>
+                <Dmd>
+                    <DescDmd>kh</DescDmd>
+                    <DateDebut>Thu Dec 06 03:18:49 CET 2018</DateDebut>
+                    <DateFin>Sat Dec 08 03:18:49 CET 2018</DateFin>
+                </Dmd>
+            </Message>
+        </CollMess>
+    </Body>
+</Fichier>

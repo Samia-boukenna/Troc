@@ -95,7 +95,7 @@ public class DmdController {
         utilisateurRepo.save(uR);
         model.addAttribute("msgConf","Ajout reussi");
         xml.xmlCreerDmd(fic);
-
+System.out.println(message.getProp());
 
         return "nouvelle_dmd";
     }
