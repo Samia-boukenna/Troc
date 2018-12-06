@@ -85,6 +85,8 @@
                                         <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes demandes envoyées</a>
                                     <a href="/dmd-recues" class="waves-effect">
                                         <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes demandes recues</a>
+                                    <a href="/prop-recues" class="waves-effect">
+                                        <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes propositions reçues</a>
                                     <a href="/mes_prop" class="waves-effect">
                                         <i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Mes propositions envoyées</a>
                                     <a href="/mes_objets" class="waves-effect">

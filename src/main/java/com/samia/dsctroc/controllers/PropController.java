@@ -92,6 +92,7 @@ public class PropController {
         model.addAttribute("users",utilisateursAutorises );
         model.addAttribute("fichier", fichier);
         model.addAttribute("message", message);
+        model.addAttribute("msgConf","");
         return "nouvelle_prop";
     }
 

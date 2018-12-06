@@ -37,7 +37,6 @@ public class ObjetController {
     public String afficherObjets(Model model, HttpServletRequest request) throws IOException {
       List<Objet> objets=(List<Objet>) objetRepo.findAllByMineTrue();
         model.addAttribute("objets", objets);
-        
         model.addAttribute("newObjet", new Objet());
         return "mes_objets";
     }

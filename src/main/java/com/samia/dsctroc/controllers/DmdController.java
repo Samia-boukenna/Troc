@@ -46,7 +46,14 @@ public class DmdController {
         
         model.addAttribute("fichier", fichier);
         model.addAttribute("message", message);
+        model.addAttribute("msgConf","");
+
         return "nouvelle_dmd";
+    }
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String afficherPageAccueil(Model model, HttpServletRequest request) throws IOException {
+        
+        return "redirect:/nouvelle_dmd";
     }
 
 
