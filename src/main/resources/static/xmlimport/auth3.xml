@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><Fichier>
+    <Header>
+        <FicID>93ada247-9bcf-4b23-9611-eaf30e0d3821</FicID>
+        <NmIE/>
+        <NmIR>qdkfj</NmIR>
+        <NumAuto>5a1786cc-a1ac-485b-9f0a-ff4d02ed9f3c</NumAuto>
+        <MailDest>bcnj@zajh</MailDest>
+        <MailExp>qoihdj@sdh</MailExp>
+    </Header>
+    <Body>
+        <CollMess NbOfTxs="1">
+            <Message MsgId="_ead46f2d-4a02-4dbe-8833-dce94f26e46e">
+                <Dte>2018-12-06 01:25:44.506</Dte>
+                <DureeValideMsg>1</DureeValideMsg>
+                <Auth>
+                    <Rep>
+                        <AccAuth>demande traité</AccAuth>
+                    </Rep>
+                </Auth>
+            </Message>
+        </CollMess>
+    </Body>
+</Fichier>

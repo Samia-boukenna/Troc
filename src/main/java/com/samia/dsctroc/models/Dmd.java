@@ -14,7 +14,7 @@ public class Dmd {
     @Id
     @GeneratedValue
     private int id;
-
+    private boolean receved;    
     private String description;
     private Date dateDebut;
     private Date dateFin;

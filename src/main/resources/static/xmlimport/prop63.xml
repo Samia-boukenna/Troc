@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?xml-stylesheet type="text/xsl" href="xsl/prop.xsl"?><Fichier>
+    <Header>
+        <FicID>c7563f49-b345-4662-a534-550488d86134</FicID>
+        <NmIE>csv</NmIE>
+        <NmIR>sdlkfj</NmIR>
+        <MailDest>qoihdj@sdh</MailDest>
+        <MailExp>qsd@su</MailExp>
+    </Header>
+    <Body>
+        <CollMess NbOfTxs="1">
+            <Message MsgId="_686b939a-fa8a-4f7c-85f7-a53d53618612">
+                <Dte>Thu Dec 06 04:27:23 CET 2018</Dte>
+                <DureeValideMsg>2</DureeValideMsg>
+                <Prop>
+                    <TitreP>qpkfjkdsv</TitreP>
+                    <Offre>
+                        <Objet>
+                            <Type>qdfjja</Type>
+                            <Description>
+                                <Parametre>
+                                    <Nom>kjhhjhj</Nom>
+                                    <Valeur>jklj</Valeur>
+                                </Parametre>
+                            </Description>
+                        </Objet>
+                    </Offre>
+                    <Demande>
+                        <Objet>
+                            <Type>kbjkglfddkjsk</Type>
+                            <Description>
+                                <Parametre>
+                                    <Nom>fkgjfki</Nom>
+                                    <Valeur>jhhhfyh</Valeur>
+                                </Parametre>
+                                <Parametre>
+                                    <Nom/>
+                                    <Valeur/>
+                                </Parametre>
+                                <Parametre>
+                                    <Nom>qdfqsf</Nom>
+                                    <Valeur>azdsd</Valeur>
+                                </Parametre>
+                            </Description>
+                        </Objet>
+                    </Demande>
+                </Prop>
+            </Message>
+        </CollMess>
+    </Body>
+</Fichier>

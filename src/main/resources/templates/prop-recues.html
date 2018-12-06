@@ -19,7 +19,7 @@
     <link href="css/style.css" rel="stylesheet">
 
     <link href="css/colors/default.css" id="theme" rel="stylesheet">
-    <link href="css/troc.css"  rel="stylesheet">
+    <link href="css/troc.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,7 +35,7 @@
 <!-- ============================================================== -->
 <div class="preloader">
     <svg class="circular" viewBox="25 25 50 50">
-        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
     </svg>
 </div>
 <!-- ============================================================== -->
@@ -63,11 +63,11 @@
         <div class="container-fluid">
             <div class="row bg-title">
                 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                    <h4 class="page-title">Mes demandes</h4> </div>
+                    <h4 class="page-title">Demandes recues</h4></div>
                 <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                     <ol class="breadcrumb">
                         <li><a href="/">Troc</a></li>
-                        <li class="active">mes_dmd</li>
+                        <li class="active">dmd-recues</li>
                     </ol>
                 </div>
             </div>
@@ -75,35 +75,42 @@
 
             <!-- .row -->
             <div class="row">
-                <div class="col-md-8 col-md-offset-2 col-xs-12">
+                <div class="col-md-10 col-md-offset-1 col-xs-12">
                     <div class="row">
-
-                        <div class="col-md-4" th:each="fic : ${listFicValid}">
-                            <div class="panel panel-default">
-                                <div class="panel-body text-center">
-                                    <img src="/images/xml.png">
-                                    <p>[[${fic.getName()}]]</p>
-                                    <a class="btn btn-primary" th:href="@{'/xmlexport/dmd/'+${fic.name}}">Voir details</a> 
-                                    <div th:if="${acceptedlist.contains(fic.getName())}">Demande accéptée! </div>
-                                    </div>
-                            </div>
-                        </div>
-                        
-                         <div class="col-md-4" th:each="fic : ${listFicInvalid}">
-                            <div class="panel panel-default">
-                                <div class="panel-body text-center">
-                                    invalide<br>
-                                    <p>[[${fic.getName()}]]</p>
-                                  
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4" th:each="fic : ${listFicValidExpired}">
-                            <div class="panel panel-default">
-                                <div class="panel-body text-center">
-                                    expiré<br>
-                                    <p>[[${fic.getName()}]]</p>
-                                  
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>Emetteur</th>
+                                            <th>Recepteur</th>
+                                            <th>Date debut</th>
+                                            <th>Date fin</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="fic : ${fichiers}">
+                                            <td th:text="${fic.getIE().nom}"></td>
+                                            <td th:text="${fic.getIR().nom}"></td>
+                                            <td th:text="${fic.messages.get(0).prop.dateDebut}"></td>
+                                            <td th:text="${fic.messages.get(0).prop.dateFin}"></td>
+                                            <td> 
+                                                <ul th:each="${fic.messages.get(0).prop.offre.description.parametres}">
+                                                    <li>
+                                                </ul></td>
+                                            
+                                            <td th:text="${(fic.messages.get(0).auth == null) ? 'Pas encore traitée': (fic.messages.get(0).auth.accepte ? 'acceptée':'refusée')}"></td>
+                                            <td>
+                                                <input th:if="${(fic.messages.get(0).auth == null)}" type="hidden" class="msg" th:value="${fic.messages.get(0).id}">
+                                                <button th:if="${(fic.messages.get(0).auth == null)}" id="accepter-dmd" class="btn btn-success">Accepter</button>
+                                                <button th:if="${(fic.messages.get(0).auth == null)}" id="refuser-dmd" class="btn btn-danger">Refuser</button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

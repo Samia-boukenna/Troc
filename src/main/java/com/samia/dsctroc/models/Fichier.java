@@ -12,9 +12,9 @@ public class Fichier {
 
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
 
-    private String ficId;
+    private String ficid;
 
     private String numAuto;
 
@@ -28,6 +28,6 @@ public class Fichier {
     List<Message> messages;
 
     public Fichier(){
-        ficId = UUID.randomUUID().toString();
+        ficid = UUID.randomUUID().toString();
     }
 }

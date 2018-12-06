@@ -1,9 +1,16 @@
 package com.samia.dsctroc.core;
 
 import com.samia.dsctroc.models.*;
+import com.samia.dsctroc.repositories.AuthRepo;
+import com.samia.dsctroc.repositories.DemandeRepo;
+import com.samia.dsctroc.repositories.DescriptionRepo;
 import com.samia.dsctroc.repositories.DmdRepo;
 import com.samia.dsctroc.repositories.FichierRepo;
 import com.samia.dsctroc.repositories.MessageRepo;
+import com.samia.dsctroc.repositories.ObjetRepo;
+import com.samia.dsctroc.repositories.OffreRepo;
+import com.samia.dsctroc.repositories.ParametreRepo;
+import com.samia.dsctroc.repositories.PropRepo;
 import com.samia.dsctroc.repositories.UtilisateurRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -29,6 +36,9 @@ import java.util.Date;
 import java.util.List;
 
 import static java.util.Calendar.getInstance;
+import java.util.HashSet;
+import java.util.Set;
+import org.w3c.dom.NodeList;
 
 @Service
 @Configurable
@@ -37,9 +47,23 @@ public class Xml {
 
     @Autowired
     private UtilisateurRepo utilisateurRepo;
+ @Autowired
+    private AuthRepo authRepo;
 
     @Autowired
+    private ObjetRepo objetRepo;
+    @Autowired
+    private PropRepo propRepo;
+    @Autowired
     private DmdRepo dmdRepo;
+    @Autowired
+    private ParametreRepo paramRepo;
+    @Autowired
+    private OffreRepo offreRepo;
+    @Autowired
+    private DescriptionRepo descRepo;
+    @Autowired
+    private DemandeRepo demandeRepo;
 
     @Autowired
     private MessageRepo messageRepo;
@@ -66,7 +90,7 @@ public class Xml {
             xMLStreamWriter.writeStartElement("Fichier");
             xMLStreamWriter.writeStartElement("Header");
             xMLStreamWriter.writeStartElement("FicID");
-            xMLStreamWriter.writeCharacters(fichier.getFicId());
+            xMLStreamWriter.writeCharacters(fichier.getFicid());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("NmIE");
             xMLStreamWriter.writeCharacters(fichier.getIE().getNom());
@@ -136,7 +160,128 @@ public class Xml {
     }
 
     // lecture de la  demande ça lit la demande et enregistration dans la bdd ( lors de la reception)
-    public void xmlLireDmd(String chemin) {
+    public void xmlLireProp(String chemin) {
+        try {
+            File file = new File(chemin);
+          ParserXml mondoc=new ParserXml(file);
+          Document document=mondoc.getDocument();
+            if (document.getElementsByTagName("Prop").getLength() != 0) {
+                Fichier fic = new Fichier();
+                Message message = new Message();
+                Date dateActuelle = new Date();
+                List<Message> messages = new ArrayList<>();
+                List<Fichier> fichiers = new ArrayList<>();
+                Utilisateur uE = utilisateurRepo.findByMail(document.getElementsByTagName("MailExp").item(0).getTextContent());
+                Utilisateur uR = utilisateurRepo.findByMail(document.getElementsByTagName("MailDest").item(0).getTextContent());
+                fic.setFicid(document.getElementsByTagName("FicID").item(0).getTextContent());
+                if (uE == null) {
+                    uE = new Utilisateur();
+                    uE.setNom(document.getElementsByTagName("NmIE").item(0).getTextContent());
+                    uE.setMail(document.getElementsByTagName("MailExp").item(0).getTextContent());
+                    utilisateurRepo.save(uE);
+
+                }
+                if (uR == null) {
+                    uR = new Utilisateur();
+                    uR.setNom(document.getElementsByTagName("NmIR").item(0).getTextContent());
+                    uR.setMail(document.getElementsByTagName("MailDest").item(0).getTextContent());
+                    utilisateurRepo.save(uR);
+                }
+                fic.setIE(uE);
+                fic.setIR(uR);
+                fichierRepo.save(fic);
+
+                Prop prop = new Prop();
+                prop.setReceved(true);
+                
+                prop.setTitre(document.getElementsByTagName("TitreP").item(0).getTextContent());
+                Offre offre=new Offre();
+                Objet objet;
+                Description description;
+                Parametre param;
+                List<Parametre> listeparam=new ArrayList();
+                Set<Objet> listeobj=new HashSet();
+                NodeList objetsListOffre=document.getElementsByTagName("Offre").item(0).getChildNodes();
+                System.out.println(objetsListOffre.item(0).getNodeName());
+                NodeList objetParam;
+                    
+                for(int i=0;i<objetsListOffre.getLength() ;i++){
+                    objet=new Objet();
+                    description=new Description();
+                    listeparam=new ArrayList();
+                    listeobj=new HashSet();
+                    objetParam=objetsListOffre.item(i).getChildNodes().item(1).getChildNodes();
+                    System.out.println(objetParam);
+                    objet.setType(objetsListOffre.item(i).getFirstChild().getTextContent());
+                    for(int k=0;k<objetParam.getLength();k++){
+                        param=new Parametre();
+                        param.setNom(objetParam.item(k).getFirstChild().getTextContent());
+                        param.setValeur(objetParam.item(k).getLastChild().getTextContent());
+                       listeparam.add(param);
+                    }
+                    description.setParametres(listeparam);
+                    paramRepo.saveAll(listeparam);
+                    descRepo.save(description);
+                    objet.setDescription(description);
+                    objetRepo.save(objet);
+                    listeobj.add(objet);
+                    
+                }
+                 offre.setObjets(listeobj);
+                prop.setOffre(offre);
+                offreRepo.save(offre);
+                  NodeList objetsListDemande=document.getElementsByTagName("Demande").item(0).getChildNodes();
+              Demande demande=new Demande();
+                 for(int i=0;i<objetsListDemande.getLength() ;i++){
+                    objet=new Objet();
+                    description=new Description();
+                    listeparam=new ArrayList();
+                    listeobj=new HashSet();
+                    objetParam=objetsListDemande.item(i).getChildNodes().item(1).getChildNodes();
+                    objet.setType(objetsListDemande.item(i).getFirstChild().getTextContent());
+                    for(int k=0;k<objetParam.getLength();k++){
+                        param=new Parametre();
+                        param.setNom(objetParam.item(k).getFirstChild().getTextContent());
+                        param.setValeur(objetParam.item(k).getLastChild().getTextContent());
+                       listeparam.add(param);
+                    }
+                    description.setParametres(listeparam);
+                    paramRepo.saveAll(listeparam);
+                    descRepo.save(description);
+                    objet.setDescription(description);
+                    objetRepo.save(objet);
+                    listeobj.add(objet);
+                }
+                 demande.setObjets(listeobj);
+                 prop.setDemande(demande);
+                demandeRepo.save(demande);
+                    
+                    System.out.println(prop);
+                propRepo.save(prop);
+                message.setProp(prop);
+                message.setDureeValide(Integer.parseInt(document.getElementsByTagName("DureeValideMsg").item(0).getTextContent()));
+                message.setDte(dateActuelle);
+                message.setFichier(fic);
+
+                messageRepo.save(message);
+                messages.add(message);
+                fic.setMessages(messages);
+                fichierRepo.save(fic);
+                fichiers.add(fic);
+                uE.setFichiersEm(fichiers);
+                utilisateurRepo.save(uE);
+
+                uR.setFichiersRec(fichiers);
+                utilisateurRepo.save(uR);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+     public void xmlLireDmd(String chemin) {
         try {
             File file = new File(chemin);
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -150,10 +295,10 @@ public class Xml {
                 List<Fichier> fichiers = new ArrayList<>();
                 Utilisateur uE = utilisateurRepo.findByMail(document.getElementsByTagName("MailExp").item(0).getTextContent());
                 Utilisateur uR = utilisateurRepo.findByMail(document.getElementsByTagName("MailDest").item(0).getTextContent());
-                fic.setFicId(document.getElementsByTagName("FicID").item(0).getTextContent());
+                fic.setFicid(document.getElementsByTagName("FicID").item(0).getTextContent());
                 if (uE == null) {
                     uE = new Utilisateur();
-                   
+                    uE.setNom(document.getElementsByTagName("NmIE").item(0).getTextContent());
                     uE.setMail(document.getElementsByTagName("MailExp").item(0).getTextContent());
                     utilisateurRepo.save(uE);
 
@@ -169,6 +314,7 @@ public class Xml {
                 fichierRepo.save(fic);
 
                 Dmd dmd = new Dmd();
+                dmd.setReceved(true);
                 dmd.setDateDebut(dateActuelle);
                 dmd.setDateFin(dateActuelle);
                 dmd.setDescription(document.getElementsByTagName("DescDmd").item(0).getTextContent());
@@ -194,7 +340,32 @@ public class Xml {
             e.printStackTrace();
         }
     }
-
+public void xmlLireAuth(String chemin) {
+        try {
+            File file = new File(chemin);
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            Document document = documentBuilder.parse(file);
+            if (document.getElementsByTagName("Auth").getLength() != 0) {
+                Fichier fic = fichierRepo.findByFicid(document.getElementsByTagName("FicID").item(0).getTextContent()).get();
+               
+                
+                Auth auth = new Auth();
+                if(document.getElementsByTagName("AccAuth").getLength() != 0)
+                    auth.setAccepte(true);
+                else
+                    auth.setAccepte(false);
+                
+                auth.setNumAuth(document.getElementsByTagName("NumAuto").item(0).getTextContent());
+                authRepo.save(auth);
+                fic.getMessages().get(0).setAuth(auth);
+                messageRepo.save(fic.getMessages().get(0));
+                fichierRepo.save(fic);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void xmlCreateProp(Fichier fichier) {
 
         try {
@@ -209,7 +380,7 @@ public class Xml {
             xMLStreamWriter.writeStartElement("Fichier");
             xMLStreamWriter.writeStartElement("Header");
             xMLStreamWriter.writeStartElement("FicID");
-            xMLStreamWriter.writeCharacters(fichier.getFicId());
+            xMLStreamWriter.writeCharacters(fichier.getFicid());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("NmIE");
             xMLStreamWriter.writeCharacters(fichier.getIE().getNom());
@@ -248,7 +419,7 @@ public class Xml {
             xMLStreamWriter.writeCharacters(objetsOffre[j].getType());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("Description");
-            for (int k=1;k<objetsOffre[j].getDescription().getParametres().size();k++){
+            for (int k=0;k<objetsOffre[j].getDescription().getParametres().size();k++){
             xMLStreamWriter.writeStartElement("Parametre");
             xMLStreamWriter.writeStartElement("Nom");
             xMLStreamWriter.writeCharacters(objetsOffre[j].getDescription().getParametres().get(k).getNom());
@@ -270,7 +441,7 @@ public class Xml {
             xMLStreamWriter.writeCharacters(objetsDemande[j].getType());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("Description");
-            for (int k=1;k<objetsDemande[j].getDescription().getParametres().size();k++){
+            for (int k=0;k<objetsDemande[j].getDescription().getParametres().size();k++){
             xMLStreamWriter.writeStartElement("Parametre");
             xMLStreamWriter.writeStartElement("Nom");
             xMLStreamWriter.writeCharacters(objetsDemande[j].getDescription().getParametres().get(k).getNom());
@@ -329,12 +500,12 @@ public class Xml {
             xMLStreamWriter.writeStartElement("Fichier");
             xMLStreamWriter.writeStartElement("Header");
             xMLStreamWriter.writeStartElement("FicID");
-            xMLStreamWriter.writeCharacters(fichier.getFicId());
+            xMLStreamWriter.writeCharacters(fichier.getFicid());
             xMLStreamWriter.writeEndElement();
-            xMLStreamWriter.writeStartElement("nmIE");
+            xMLStreamWriter.writeStartElement("NmIE");
             xMLStreamWriter.writeCharacters(fichier.getIE().getNom());
             xMLStreamWriter.writeEndElement();
-            xMLStreamWriter.writeStartElement("nmIR");
+            xMLStreamWriter.writeStartElement("NmIR");
             xMLStreamWriter.writeCharacters(fichier.getIR().getNom());
             xMLStreamWriter.writeEndElement();
             xMLStreamWriter.writeStartElement("NumAuto");
@@ -409,7 +580,7 @@ public class Xml {
 
     }
 
-    public boolean verifierFichierTraite(String chemin){
+    public boolean verifierFichierTraite(String chemin, String type){
 
         try {
             File file = new File(chemin);
@@ -420,7 +591,22 @@ public class Xml {
                 return false;
 
             String ficId = document.getElementsByTagName("FicID").item(0).getTextContent();
-            if(fichierRepo.estTraite(ficId) != 0)
+            if(type.equals("auth")){
+                 if(fichierRepo.estTraite(ficId) != 1)
+                     return false;
+             Fichier fic = fichierRepo.findByFicid(document.getElementsByTagName("FicID").item(0).getTextContent()).get();
+             System.out.println(document.getElementsByTagName("FicID").item(0).getTextContent());
+               if(fic.getMessages().get(0).getAuth()!=null)
+                   return false;
+            }
+            if(type.equals("prop")){
+                 if(fichierRepo.estTraite(ficId) != 1)
+                     return false;
+             Fichier fic = fichierRepo.findByFicid(document.getElementsByTagName("FicID").item(0).getTextContent()).get();
+               if(fic.getMessages().get(0).getAuth()==null)
+                   return false;
+            }
+            if(fichierRepo.estTraite(ficId) != 0 && !type.equals("auth") && !type.equals("prop"))
                 return false;
         }catch (Exception e){
             e.printStackTrace();

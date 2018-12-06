@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package com.samia.dsctroc.core;
+import com.samia.dsctroc.models.Fichier;
+import com.samia.dsctroc.repositories.FichierRepo;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -22,6 +24,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 
 import org.w3c.dom.Document;
@@ -37,7 +40,8 @@ import org.xml.sax.SAXParseException;
  */
 @Data
 public class ParserXml {
-
+ @Autowired
+    private FichierRepo fichierRepo;
 private Document document;
 private static Element root;
 private static NodeList nodes;
@@ -97,6 +101,13 @@ factory.setIgnoringElementContentWhitespace(true);
              return true;
          return false;
 } 
+      public static boolean isAuth(){
+      NodeList list = root.getFirstChild().getChildNodes();
+      System.out.println(list.item(3).getNodeName());
+         if(list.item(3).getNodeName().equals("NumAuto"))
+             return true;
+         return false;
+} 
    public static boolean isOnTime(){
        Node message=root.getLastChild().getFirstChild().getFirstChild();
        NodeList list = message.getChildNodes();
@@ -125,5 +136,5 @@ factory.setIgnoringElementContentWhitespace(true);
              
        
          return false;
-}
+   }
 }

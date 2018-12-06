@@ -81,24 +81,20 @@
                             <div class="white-box">
                                 <form class="form-horizontal form-material" method="post" action="/nouvelle_prop" th:object="${fichier}">
                                     <div class="form-group">
-                                        <label for="nomIe" class="col-md-12">Nom de l'emetteur</label>
+                                         <select th:name="userMail">
+    <option th:each="i : ${users}" th:value="${i.getMail()}" th:text="${i.getNom()}"></option>
+</select>
+                    
+                                        </div>
+                                    <div class="form-group">
+                                        <label for="nomIR" class="col-md-12">Nom de l'emmeteurr</label>
                                         <div class="col-md-12">
-                                            <input type="text" id="nomIe" th:field="*{IE.nom}"  class="form-control form-control-line"> </div>
+                                            <input type="text"  th:field="*{IE.nom}"  id="nomIR" class="form-control form-control-line"> </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="mailIe" class="col-md-12">Adresse mail du emetteur</label>
+                                        <label for="emailIR" class="col-md-12">Adresse mail de l'emmeteur </label>
                                         <div class="col-md-12">
-                                            <input type="email" th:field="*{IE.mail}"  class="form-control form-control-line" name="example-email" id="mailIe"> </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="nomIR" class="col-md-12">Nom du recepteur</label>
-                                        <div class="col-md-12">
-                                            <input type="text"  th:field="*{IR.nom}"  id="nomIR" class="form-control form-control-line"> </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="emailIR" class="col-md-12">Adresse mail du recepteur </label>
-                                        <div class="col-md-12">
-                                            <input type="email" th:field="*{IR.mail}"   class="form-control form-control-line" name="example-email" id="emailIR"> </div>
+                                            <input type="email" th:field="*{IE.mail}"   class="form-control form-control-line" name="example-email" id="emailIR"> </div>
                                     </div>
 
                                     <div class="form-group">

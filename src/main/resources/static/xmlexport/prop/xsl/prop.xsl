@@ -127,7 +127,7 @@
                                                 <label class="col-sm-5 control-label">Demande recue par</label>
                                                 <div class="col-sm-7">
                                                     <p class="form-control-static"> 
-                                                        <xsl:value-of select="Fichier/Header/nmIE"/>
+                                                        <xsl:value-of select="Fichier/Header/NmIE"/>
                                                     </p>
                                                 </div>
                                             </div>

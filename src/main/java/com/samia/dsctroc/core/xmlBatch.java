@@ -26,7 +26,7 @@ public class xmlBatch {
                     if(atester.getDocument()!=null){
                         if(atester.isDmd()){
                     System.out.println("fichier: "+fileEntry.getName());
-                    if(xml.verifierFichierTraite(fileEntry.getPath())) {
+                    if(xml.verifierFichierTraite(fileEntry.getPath(),"dmd")) {
                         System.out.println("traitement en cours");
                         xml.xmlLireDmd(fileEntry.getPath());
                     }else{
@@ -34,10 +34,22 @@ public class xmlBatch {
                     }
                     
                 }else if(atester.isProp()){
-                   //a faire 
-                }//else if(atester.isAuth()){
-                   //a faire 
-              //  }
+                    
+                   if(xml.verifierFichierTraite(fileEntry.getPath(),"prop")) {
+                        System.out.println("traitement en cours");
+                        xml.xmlLireProp(fileEntry.getPath());
+                    }else{
+                        System.out.println("fichier deja traité");
+                    }
+                }else if(atester.isAuth()){
+                    
+                   if(xml.verifierFichierTraite(fileEntry.getPath(),"auth")) {
+                        System.out.println("traitement en cours");
+                        xml.xmlLireAuth(fileEntry.getPath());
+                    }else{
+                        System.out.println("fichier deja traité");
+                    }
+                }
                 }else{
                  System.out.println("fichier Invalide");
                 }

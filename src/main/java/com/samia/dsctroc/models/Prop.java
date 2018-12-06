@@ -19,7 +19,7 @@ public class Prop {
 
     private boolean mine;
     private String titre;
-
+private boolean receved;
     @OneToOne
     private Offre offre;
     @OneToOne

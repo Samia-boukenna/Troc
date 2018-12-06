@@ -36,6 +36,7 @@ import java.util.Calendar;
 import static java.util.Calendar.getInstance;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -79,21 +80,29 @@ public class PropController {
     public String afficherPageProp(Model model, HttpServletRequest request) throws IOException {
         Fichier fichier = new Fichier();
         Message message = new Message();
-       
+       List<Fichier> allFiles = (List<Fichier>) fichierRepo.findAll();
+       List<Utilisateur> utilisateursAutorises=new ArrayList();
+       for(int i=0;i<allFiles.size();i++)
+           if(allFiles.get(i).getMessages().get(0).getAuth()!=null)
+               if(allFiles.get(i).getMessages().get(0).getDmd().isReceved())
+                    utilisateursAutorises.add(allFiles.get(i).getIE());
+               else
+                    utilisateursAutorises.add(allFiles.get(i).getIR());
         model.addAttribute("propositions", propRepo.findAllByMineTrue());
+        model.addAttribute("users",utilisateursAutorises );
         model.addAttribute("fichier", fichier);
         model.addAttribute("message", message);
         return "nouvelle_prop";
     }
 
     @PostMapping("/nouvelle_prop")
-    public String creerDmd(int idProposition,@ModelAttribute("fichier") Fichier f,@ModelAttribute("message") Message message, Model model) {
+    public String creerDmd(int idProposition,String userMail,@ModelAttribute("fichier") Fichier f,@ModelAttribute("message") Message message, Model model) {
         Fichier fic = new Fichier();
         Date dateActuelle = new Date();
         List<Message> messages = new ArrayList<>();
         List<Fichier> fichiers = new ArrayList<>();
         Utilisateur uE = f.getIE();
-        Utilisateur uR = f.getIR();
+        Utilisateur uR = utilisateurRepo.findByMail(userMail);
         utilisateurRepo.save(uE);
         utilisateurRepo.save(uR);
 
